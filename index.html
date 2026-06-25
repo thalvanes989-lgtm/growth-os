@@ -182,6 +182,31 @@
   .topbar-shortcuts { display: flex; gap: 6px; margin-right: 8px; }
   .topbar-shortcut { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: var(--radius-sm); background: var(--surface-2); color: var(--text-2); text-decoration: none; font-size: 15px; transition: background 0.15s, color 0.15s; }
   .topbar-shortcut:hover { background: var(--accent-bg); color: var(--accent); }
+  .hero { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 22px 24px; margin-bottom: 16px; box-shadow: var(--shadow-md); }
+  .hero-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .hero-level { display: flex; align-items: center; gap: 14px; }
+  .hero-level-badge { width: 52px; height: 52px; border-radius: var(--radius); background: linear-gradient(135deg, var(--accent), var(--purple)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; flex-shrink: 0; }
+  .hero-level-info { display: flex; flex-direction: column; }
+  .hero-level-num { font-size: 15px; font-weight: 700; }
+  .hero-level-xp { font-size: 11.5px; color: var(--text-3); }
+  .hero-xp-track { width: 200px; max-width: 100%; height: 6px; background: var(--surface-2); border-radius: 99px; overflow: hidden; margin-top: 5px; }
+  .hero-xp-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--purple)); border-radius: 99px; transition: width 0.5s ease; }
+  .hero-streak { text-align: right; }
+  .hero-streak-num { font-size: 30px; font-weight: 700; line-height: 1; color: var(--accent); }
+  .hero-streak-label { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+  .hero-floor { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; align-items: center; }
+  .floor-chip { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; border: 1px solid var(--border-strong); }
+  .floor-chip.done { background: var(--green-bg); color: var(--green); border-color: transparent; }
+  .floor-chip.pending { background: var(--surface-2); color: var(--text-2); }
+  .floor-chip i { font-size: 16px; }
+  .floor-status { font-size: 12.5px; font-weight: 600; margin-left: auto; }
+  .floor-status.met { color: var(--green); }
+  .floor-status.unmet { color: var(--amber); }
+  .hero-gap { display: flex; align-items: center; gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+  .hero-gap-num { font-size: 22px; font-weight: 700; }
+  .hero-gap-label { font-size: 12px; color: var(--text-2); line-height: 1.4; }
+  .floor-config { margin-top: 14px; display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-3); }
+  .floor-config select { width: auto; padding: 5px 8px; font-size: 12px; background: var(--bg); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); color: var(--text); }
   @media (max-width: 720px) {
     .sidebar { display: none; }
     .content { padding: 16px; }
@@ -247,10 +272,6 @@
         <div class="page-sub" id="page-sub">Visão consolidada — fala, escrita, entrevistas e pipeline</div>
       </div>
       <div class="topbar-actions">
-        <div class="topbar-shortcuts">
-          <a class="topbar-shortcut" href="https://otter.ai" target="_blank" rel="noopener" title="Otter.ai"><i class="ti ti-microphone-2"></i></a>
-          <a class="topbar-shortcut" href="https://meet.google.com" target="_blank" rel="noopener" title="Google Meet"><i class="ti ti-video"></i></a>
-        </div>
         <button class="btn btn-ghost" onclick="exportData()"><i class="ti ti-download"></i> Exportar</button>
         <button class="btn btn-ghost" onclick="document.getElementById('import-file').click()"><i class="ti ti-upload"></i> Importar</button>
         <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)">
@@ -261,6 +282,33 @@
 
       <!-- ============ DASHBOARD ============ -->
       <div id="panel-dashboard" class="panel active">
+        <div class="hero">
+          <div class="hero-top">
+            <div class="hero-level">
+              <div class="hero-level-badge" id="hero-level-badge">1</div>
+              <div class="hero-level-info">
+                <div class="hero-level-num" id="hero-level-num">Nível 1</div>
+                <div class="hero-level-xp" id="hero-level-xp">0 XP</div>
+                <div class="hero-xp-track"><div class="hero-xp-fill" id="hero-xp-fill" style="width:0%"></div></div>
+              </div>
+            </div>
+            <div class="hero-streak">
+              <div class="hero-streak-num" id="hero-streak-num">0</div>
+              <div class="hero-streak-label">dias no piso 🔥</div>
+            </div>
+          </div>
+          <div class="hero-floor" id="hero-floor"></div>
+          <div class="hero-gap" id="hero-gap"></div>
+          <div class="floor-config">
+            <i class="ti ti-adjustments"></i> Piso diário:
+            <select id="floor-mode" onchange="changeFloorMode()">
+              <option value="both">1 drill + 1 escrita</option>
+              <option value="drill">1 drill de fala</option>
+              <option value="any">1 atividade qualquer</option>
+            </select>
+          </div>
+        </div>
+
         <div class="gate-banner" id="gate-banner-dash">
           <div class="gd" id="gate-banner-dots"></div>
           <span id="gate-banner-text"></span>
@@ -292,10 +340,11 @@
         <div class="card">
           <div class="card-title"><span><i class="ti ti-link card-title-icon"></i> Recursos rápidos</span></div>
           <div class="quicklinks">
+            <a class="qlink" href="https://docs.google.com/document/d/1fXcRKFpp_Q3YfHSN7j-nH3KiAIFf_RUsKQXvNc2MJCk/edit?tab=t.f40damkdthdf" target="_blank" rel="noopener"><i class="ti ti-file-text"></i> Perguntas de treino</a>
+            <a class="qlink" href="https://docs.google.com/document/d/1fXcRKFpp_Q3YfHSN7j-nH3KiAIFf_RUsKQXvNc2MJCk/edit?tab=t.d5vdbag997ub" target="_blank" rel="noopener"><i class="ti ti-file-text"></i> Respostas padrão</a>
             <a class="qlink" href="https://www.youtube.com/@LennysPodcast" target="_blank" rel="noopener"><i class="ti ti-brand-youtube"></i> Lenny's Podcast</a>
             <a class="qlink" href="https://www.youtube.com/@heydavegerhardt" target="_blank" rel="noopener"><i class="ti ti-brand-youtube"></i> Dave Gerhardt</a>
-            <a class="qlink" href="https://otter.ai" target="_blank" rel="noopener"><i class="ti ti-microphone-2"></i> Otter.ai</a>
-            <a class="qlink" href="https://meet.google.com" target="_blank" rel="noopener"><i class="ti ti-video"></i> Google Meet</a>
+            <a class="qlink" href="https://docs.google.com/document/d/1tGAl9ynorog7B5BDgi4IL3ITcmCVG6VVHBD9E6v-jG4/edit?tab=t.0" target="_blank" rel="noopener"><i class="ti ti-notebook"></i> Journaling Practice</a>
           </div>
           <div id="custom-links-list" class="quicklinks" style="margin-top:8px;"></div>
           <div class="qlink-edit-row">
@@ -348,7 +397,7 @@
         </div>
 
         <div class="card">
-          <div class="card-title">Registrar sessão de drill</div>
+          <div class="card-title"><span>Registrar sessão de drill</span><a class="qlink" href="https://docs.google.com/document/d/1fXcRKFpp_Q3YfHSN7j-nH3KiAIFf_RUsKQXvNc2MJCk/edit?tab=t.f40damkdthdf" target="_blank" rel="noopener" style="font-weight:500;"><i class="ti ti-file-text"></i> Perguntas de treino</a></div>
           <div class="form-row">
             <div class="field"><label>Data</label><input type="date" id="e-date"></div>
             <div class="field"><label>Pergunta-base (das 3 fixas, ou nova)</label>
@@ -362,16 +411,25 @@
               </select>
             </div>
           </div>
-          <div class="field"><label>Foco da sessão</label>
-            <select id="e-focus">
-              <option>Eliminar "it was" resumptivo</option>
-              <option>Filler words</option>
-              <option>Pronúncia</option>
-              <option>Velocidade / ritmo</option>
-              <option>Vocabulário B2B</option>
-              <option>Liderar com "I" (anti-"we" erasure)</option>
-              <option>Entrevista completa</option>
-            </select>
+          <div class="form-row">
+            <div class="field"><label>Foco da sessão</label>
+              <select id="e-focus">
+                <option>Eliminar "it was" resumptivo</option>
+                <option>Filler words</option>
+                <option>Pronúncia</option>
+                <option>Velocidade / ritmo</option>
+                <option>Vocabulário B2B</option>
+                <option>Liderar com "I" (anti-"we" erasure)</option>
+                <option>Entrevista completa</option>
+              </select>
+            </div>
+            <div class="field"><label>Tipo de sessão</label>
+              <select id="e-type">
+                <option value="improvised">Improvisado / cold (sem ensaiar)</option>
+                <option value="rehearsed">Ensaiado / preparado</option>
+              </select>
+              <div class="hint">Improvisado vale 3x mais XP — é o que prevê entrevista real.</div>
+            </div>
           </div>
           <div class="field"><label>Transcrição (Otter.ai)</label><textarea class="tall" id="e-transcript" placeholder="Cole aqui a transcrição da sessão de prática..."></textarea></div>
           <div class="form-row-3">
@@ -454,7 +512,7 @@
 
         <div id="wtab-journal">
           <div class="card">
-            <div class="card-title">Nova entrada de journaling</div>
+            <div class="card-title"><span>Nova entrada de journaling</span><a class="qlink" href="https://docs.google.com/document/d/1tGAl9ynorog7B5BDgi4IL3ITcmCVG6VVHBD9E6v-jG4/edit?tab=t.0" target="_blank" rel="noopener" style="font-weight:500;"><i class="ti ti-notebook"></i> Journaling Practice (Doc)</a></div>
             <div class="field"><label>Data</label><input type="date" id="w-date"></div>
             <div class="field"><label>Texto em inglês</label><textarea class="tall" id="w-text" placeholder="Escreva seu journaling em inglês aqui..."></textarea></div>
             <div class="field"><label>Tema do dia (opcional)</label><input type="text" id="w-topic" placeholder="ex: reflexão sobre a semana, gratidão, desafio do dia"></div>
@@ -475,7 +533,7 @@
 
         <div id="wtab-prepared" style="display:none;">
           <div class="card">
-            <div class="card-title">Nova resposta escrita</div>
+            <div class="card-title"><span>Nova resposta escrita</span><a class="qlink" href="https://docs.google.com/document/d/1fXcRKFpp_Q3YfHSN7j-nH3KiAIFf_RUsKQXvNc2MJCk/edit?tab=t.d5vdbag997ub" target="_blank" rel="noopener" style="font-weight:500;"><i class="ti ti-file-text"></i> Respostas padrão (Doc)</a></div>
             <div class="form-row">
               <div class="field"><label>Data</label><input type="date" id="wp-date"></div>
               <div class="field"><label>Categoria da pergunta</label>
@@ -722,25 +780,27 @@
 const STORAGE_KEYS = {
   sessions: 'eng_sessions', writing: 'writing_entries', mocks: 'mock_interviews',
   real: 'real_interviews', jobs: 'pipeline_jobs', cvs: 'cv_versions',
-  shadowing: 'shadowing_entries', customLinks: 'custom_links'
+  shadowing: 'shadowing_entries', customLinks: 'custom_links', settings: 'app_settings'
 };
 let sessions = [], writingEntries = [], mocks = [], realInterviews = [], jobs = [], cvVersions = [], shadowingEntries = [], customLinks = [];
+let settings = { floorMode: 'both' };
 
 async function loadAll() {
   const results = await Promise.all(Object.entries(STORAGE_KEYS).map(async ([varName, key]) => {
     try {
       const r = await window.storage.get(key, false);
-      return [varName, r && r.value ? JSON.parse(r.value) : []];
-    } catch { return [varName, []]; }
+      return [varName, r && r.value ? JSON.parse(r.value) : (varName === 'settings' ? { floorMode: 'both' } : [])];
+    } catch { return [varName, varName === 'settings' ? { floorMode: 'both' } : []]; }
   }));
   const map = Object.fromEntries(results);
   sessions = map.sessions; writingEntries = map.writing; mocks = map.mocks;
   realInterviews = map.real; jobs = map.jobs; cvVersions = map.cvs;
   shadowingEntries = map.shadowing; customLinks = map.customLinks;
+  settings = (map.settings && map.settings.floorMode) ? map.settings : { floorMode: 'both' };
 }
 
 async function persist(varName) {
-  const dataMap = { sessions, writing: writingEntries, mocks, real: realInterviews, jobs, cvs: cvVersions, shadowing: shadowingEntries, customLinks };
+  const dataMap = { sessions, writing: writingEntries, mocks, real: realInterviews, jobs, cvs: cvVersions, shadowing: shadowingEntries, customLinks, settings };
   const key = STORAGE_KEYS[varName];
   try { await window.storage.set(key, JSON.stringify(dataMap[varName]), false); }
   catch (e) { console.error('Storage error', varName, e); }
@@ -861,6 +921,7 @@ async function saveSession() {
     date: document.getElementById('e-date').value || today(),
     question: document.getElementById('e-question').value,
     focus: document.getElementById('e-focus').value,
+    type: document.getElementById('e-type').value,
     transcript,
     itWasCount: transcript ? countResumptiveItWas(transcript) : null,
     confidence: parseInt(document.getElementById('e-conf').value) || null,
@@ -1471,9 +1532,125 @@ function updateNavBadges() {
 }
 
 /* ============================================================
+   GAMIFICATION ENGINE — XP, níveis, piso diário, gap prep→improviso
+   ============================================================ */
+const XP = {
+  shadowingPer10min: 1,
+  drillRehearsed: 10,
+  drillImprovised: 30,
+  cleanGateBonus: 15,      // sessão de drill com "it was" = 0
+  journaling: 8,
+  preparedAnswer: 12,
+  mock: 25,
+  realInterview: 40,
+};
+
+function computeXP() {
+  let total = 0;
+  sessions.forEach(s => {
+    total += (s.type === 'rehearsed') ? XP.drillRehearsed : XP.drillImprovised; // default improvisado
+    if (s.itWasCount === 0) total += XP.cleanGateBonus;
+  });
+  shadowingEntries.forEach(sh => { total += Math.floor((sh.minutes||0) / 10) * XP.shadowingPer10min; });
+  writingEntries.forEach(w => { total += (w.kind === 'prepared') ? XP.preparedAnswer : XP.journaling; });
+  total += mocks.length * XP.mock;
+  total += realInterviews.length * XP.realInterview;
+  return total;
+}
+
+// cumulative XP needed to REACH level n (n>=1). Level 1 = 0.
+function xpForLevel(n) { return Math.round(60 * Math.pow(n - 1, 1.5)); }
+
+function levelFromXP(xp) {
+  let n = 1;
+  while (xpForLevel(n + 1) <= xp) n++;
+  const curBase = xpForLevel(n);
+  const nextBase = xpForLevel(n + 1);
+  const pct = nextBase > curBase ? Math.round((xp - curBase) / (nextBase - curBase) * 100) : 100;
+  return { level: n, xp, intoLevel: xp - curBase, toNext: nextBase - xp, pct };
+}
+
+// Piso diário: um dia "conta" conforme o modo escolhido
+function floorMetOn(dateStr) {
+  const drillDone = sessions.some(s => s.date === dateStr);
+  const writeDone = writingEntries.some(w => w.date === dateStr);
+  const shadowDone = shadowingEntries.some(sh => sh.date === dateStr);
+  const mode = settings.floorMode || 'both';
+  if (mode === 'both') return { met: drillDone && writeDone, drillDone, writeDone, shadowDone };
+  if (mode === 'drill') return { met: drillDone, drillDone, writeDone, shadowDone };
+  return { met: drillDone || writeDone || shadowDone, drillDone, writeDone, shadowDone };
+}
+
+function floorStreak() {
+  let streak = 0;
+  let d = new Date();
+  // se hoje ainda não bateu, começa contando a partir de ontem (não pune o dia em curso)
+  const todayStr = today();
+  if (!floorMetOn(todayStr).met) d.setDate(d.getDate() - 1);
+  for (let i = 0; i < 400; i++) {
+    const ds = d.toISOString().slice(0,10);
+    if (floorMetOn(ds).met) { streak++; d.setDate(d.getDate() - 1); }
+    else break;
+  }
+  return streak;
+}
+
+// Gap preparado→improvisado: diferença de confiança média
+function preparedImprovisedGap() {
+  const reh = sessions.filter(s => s.type === 'rehearsed' && s.confidence);
+  const imp = sessions.filter(s => s.type === 'improvised' && s.confidence);
+  if (!reh.length || !imp.length) return null;
+  const avgReh = reh.reduce((a,b)=>a+b.confidence,0)/reh.length;
+  const avgImp = imp.reduce((a,b)=>a+b.confidence,0)/imp.length;
+  return { gap: avgReh - avgImp, avgReh, avgImp, nReh: reh.length, nImp: imp.length };
+}
+
+async function changeFloorMode() {
+  settings.floorMode = document.getElementById('floor-mode').value;
+  await persist('settings');
+  renderHero();
+}
+
+function renderHero() {
+  // nível + XP
+  const xp = computeXP();
+  const lv = levelFromXP(xp);
+  document.getElementById('hero-level-badge').textContent = lv.level;
+  document.getElementById('hero-level-num').textContent = 'Nível ' + lv.level;
+  document.getElementById('hero-level-xp').textContent = xp + ' XP · faltam ' + Math.max(0, lv.toNext) + ' p/ Nível ' + (lv.level + 1);
+  document.getElementById('hero-xp-fill').style.width = lv.pct + '%';
+
+  // streak
+  document.getElementById('hero-streak-num').textContent = floorStreak();
+
+  // floor de hoje
+  const f = floorMetOn(today());
+  const mode = settings.floorMode || 'both';
+  const fm = document.getElementById('floor-mode'); if (fm) fm.value = mode;
+  const chips = [];
+  chips.push(`<span class="floor-chip ${f.drillDone?'done':'pending'}"><i class="ti ti-${f.drillDone?'circle-check':'circle'}"></i> Drill de fala</span>`);
+  if (mode === 'both' || mode === 'any') chips.push(`<span class="floor-chip ${f.writeDone?'done':'pending'}"><i class="ti ti-${f.writeDone?'circle-check':'circle'}"></i> Escrita</span>`);
+  if (mode === 'any') chips.push(`<span class="floor-chip ${f.shadowDone?'done':'pending'}"><i class="ti ti-${f.shadowDone?'circle-check':'circle'}"></i> Shadowing</span>`);
+  const statusTxt = f.met ? '<span class="floor-status met"><i class="ti ti-check"></i> Piso de hoje batido</span>' : '<span class="floor-status unmet">Piso de hoje pendente</span>';
+  document.getElementById('hero-floor').innerHTML = chips.join('') + statusTxt;
+
+  // gap prep→improviso
+  const g = preparedImprovisedGap();
+  const gapEl = document.getElementById('hero-gap');
+  if (!g) {
+    gapEl.innerHTML = `<div class="hero-gap-label">Registre sessões de drill <strong>improvisadas</strong> e <strong>ensaiadas</strong> (com confiança) para ver o gap preparado→improviso — a métrica que prevê entrevista real.</div>`;
+  } else {
+    const color = g.gap >= 2.5 ? 'var(--red)' : g.gap >= 1 ? 'var(--amber)' : 'var(--green)';
+    const verdict = g.gap >= 2.5 ? 'Gap grande — você performa bem no ensaiado e cai feio no improviso. É o seu maior risco em entrevista real.' : g.gap >= 1 ? 'Gap moderado — fechando, mas ainda perceptível sob pressão.' : 'Gap pequeno — sua fala improvisada está perto da ensaiada. É isso que C1 sob pressão parece.';
+    gapEl.innerHTML = `<div class="hero-gap-num" style="color:${color}">${g.gap.toFixed(1)}</div><div class="hero-gap-label"><strong>Gap preparado→improviso</strong> (ensaiado ${g.avgReh.toFixed(1)} vs improviso ${g.avgImp.toFixed(1)}, /10). ${verdict}</div>`;
+  }
+}
+
+/* ============================================================
    DASHBOARD + CROSS-MODULE INTELLIGENCE
    ============================================================ */
 function renderDashboard() {
+  renderHero();
   renderGateBanner('gate-banner-dash','gate-banner-dots','gate-banner-text');
 
   document.getElementById('d-sessions').textContent = sessions.length;
