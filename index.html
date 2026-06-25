@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Growth Learning OS</title>
+<title>Growth Learning OS v2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
   :root {
@@ -28,6 +28,8 @@
     --red-bg: #FEE2E2;
     --purple: #5B21B6;
     --purple-bg: #EDE9FE;
+    --teal: #0F766E;
+    --teal-bg: #CCFBF1;
     --radius-sm: 6px;
     --radius: 10px;
     --radius-lg: 14px;
@@ -36,335 +38,150 @@
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #111111;
-      --surface: #1C1C1E;
-      --surface-2: #2C2C2E;
-      --border: rgba(255,255,255,0.08);
-      --border-strong: rgba(255,255,255,0.15);
-      --text: #F5F5F5;
-      --text-2: #A1A1A1;
-      --text-3: #6B6B6B;
-      --accent: #60A5FA;
-      --accent-bg: #1E3A5F;
-      --accent-text: #93C5FD;
-      --green: #86EFAC;
-      --green-bg: #14532D;
-      --amber: #FCD34D;
-      --amber-bg: #451A03;
-      --red: #FCA5A5;
-      --red-bg: #450A0A;
-      --purple: #C4B5FD;
-      --purple-bg: #2E1065;
+      --bg: #111111; --surface: #1C1C1E; --surface-2: #2C2C2E;
+      --border: rgba(255,255,255,0.08); --border-strong: rgba(255,255,255,0.15);
+      --text: #F5F5F5; --text-2: #A1A1A1; --text-3: #6B6B6B;
+      --accent: #60A5FA; --accent-bg: #1E3A5F; --accent-text: #93C5FD;
+      --green: #86EFAC; --green-bg: #14532D;
+      --amber: #FCD34D; --amber-bg: #451A03;
+      --red: #FCA5A5; --red-bg: #450A0A;
+      --purple: #C4B5FD; --purple-bg: #2E1065;
+      --teal: #5EEAD4; --teal-bg: #134E4A;
     }
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { font-size: 15px; }
-  body {
-    font-family: 'Inter', system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    line-height: 1.6;
-  }
-  /* Layout */
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
   .app-shell { display: flex; min-height: 100vh; }
-  .sidebar {
-    width: 220px;
-    flex-shrink: 0;
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto;
-  }
-  .sidebar-logo {
-    padding: 24px 20px 20px;
-    border-bottom: 1px solid var(--border);
-  }
-  .logo-mark {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: -0.01em;
-  }
+  .sidebar { width: 230px; flex-shrink: 0; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+  .sidebar-logo { padding: 24px 20px 20px; border-bottom: 1px solid var(--border); }
+  .logo-mark { font-size: 13px; font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
   .logo-sub { font-size: 11px; color: var(--text-3); margin-top: 2px; }
   .sidebar-nav { padding: 12px 8px; flex: 1; }
   .nav-section { margin-bottom: 20px; }
-  .nav-section-label {
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--text-3);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 0 12px;
-    margin-bottom: 4px;
-  }
-  .nav-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 12px;
-    border-radius: var(--radius-sm);
-    font-size: 13px;
-    color: var(--text-2);
-    cursor: pointer;
-    transition: background 0.1s, color 0.1s;
-    border: none;
-    background: none;
-    width: 100%;
-    text-align: left;
-  }
+  .nav-section-label { font-size: 10px; font-weight: 600; color: var(--text-3); letter-spacing: 0.08em; text-transform: uppercase; padding: 0 12px; margin-bottom: 4px; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: var(--radius-sm); font-size: 13px; color: var(--text-2); cursor: pointer; transition: background 0.1s, color 0.1s; border: none; background: none; width: 100%; text-align: left; }
   .nav-item:hover { background: var(--surface-2); color: var(--text); }
   .nav-item.active { background: var(--accent-bg); color: var(--accent-text); font-weight: 500; }
   .nav-item i { font-size: 16px; }
-  .nav-badge {
-    margin-left: auto;
-    background: var(--surface-2);
-    color: var(--text-3);
-    font-size: 10px;
-    font-weight: 600;
-    padding: 1px 6px;
-    border-radius: 99px;
-    min-width: 20px;
-    text-align: center;
-  }
+  .nav-badge { margin-left: auto; background: var(--surface-2); color: var(--text-3); font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 99px; min-width: 20px; text-align: center; }
   .nav-item.active .nav-badge { background: rgba(0,0,0,0.1); color: var(--accent-text); }
+  .sidebar-footer { padding: 12px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-3); }
+  .gate-pill { display: flex; align-items: center; gap: 6px; padding: 8px 10px; background: var(--surface-2); border-radius: var(--radius-sm); }
+  .gate-dots { display: flex; gap: 3px; }
+  .gate-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border-strong); }
+  .gate-dot.done { background: var(--green); }
   .main { flex: 1; min-width: 0; }
-  .topbar {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
+  .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
   .page-title { font-size: 16px; font-weight: 600; }
   .page-sub { font-size: 12px; color: var(--text-3); margin-top: 1px; }
   .topbar-actions { display: flex; gap: 8px; }
-  .content { padding: 28px 32px; max-width: 900px; }
-  /* Panels */
+  .content { padding: 28px 32px; max-width: 980px; }
   .panel { display: none; }
   .panel.active { display: block; }
-  /* Metric row */
   .metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
-  .metric-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
-    box-shadow: var(--shadow);
-  }
+  .metric-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); }
   .metric-label { font-size: 11px; color: var(--text-3); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
   .metric-value { font-size: 26px; font-weight: 600; line-height: 1.1; }
   .metric-value.blue { color: var(--accent); }
   .metric-value.green { color: var(--green); }
   .metric-value.amber { color: var(--amber); }
+  .metric-value.red { color: var(--red); }
+  .metric-value.purple { color: var(--purple); }
   .metric-sub { font-size: 11px; color: var(--text-3); margin-top: 3px; }
-  /* Cards */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 20px 24px;
-    margin-bottom: 16px;
-    box-shadow: var(--shadow);
-  }
-  .card-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-2);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  /* Form */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 16px; box-shadow: var(--shadow); }
+  .card-title { font-size: 13px; font-weight: 600; color: var(--text-2); margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .card-title-icon { color: var(--accent); }
   .field { margin-bottom: 14px; }
   .field label { display: block; font-size: 12px; font-weight: 500; color: var(--text-2); margin-bottom: 5px; }
   .field input, .field select, .field textarea {
-    width: 100%;
-    padding: 9px 12px;
-    font-size: 13px;
-    font-family: inherit;
-    background: var(--bg);
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-sm);
-    color: var(--text);
-    outline: none;
+    width: 100%; padding: 9px 12px; font-size: 13px; font-family: inherit; background: var(--bg);
+    border: 1px solid var(--border-strong); border-radius: var(--radius-sm); color: var(--text); outline: none;
     transition: border-color 0.15s, box-shadow 0.15s;
   }
-  .field input:focus, .field select:focus, .field textarea:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(26,86,219,0.1);
-  }
-  .field textarea { height: 80px; resize: vertical; line-height: 1.5; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(26,86,219,0.1); }
+  .field textarea { height: 80px; resize: vertical; line-height: 1.5; font-family: inherit; }
+  .field textarea.tall { height: 140px; }
+  .field .hint { font-size: 11px; color: var(--text-3); margin-top: 4px; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-  /* Buttons */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 9px 16px;
-    border-radius: var(--radius-sm);
-    font-size: 13px;
-    font-weight: 500;
-    font-family: inherit;
-    cursor: pointer;
-    transition: all 0.15s;
-    border: 1px solid transparent;
-  }
-  .btn-primary {
-    background: var(--text);
-    color: var(--surface);
-    border-color: var(--text);
-  }
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; font-family: inherit; cursor: pointer; transition: all 0.15s; border: 1px solid transparent; }
+  .btn-primary { background: var(--text); color: var(--surface); border-color: var(--text); }
   .btn-primary:hover { opacity: 0.85; }
-  .btn-secondary {
-    background: var(--surface);
-    color: var(--text);
-    border-color: var(--border-strong);
-  }
+  .btn-secondary { background: var(--surface); color: var(--text); border-color: var(--border-strong); }
   .btn-secondary:hover { background: var(--surface-2); }
-  .btn-ghost {
-    background: none;
-    color: var(--text-2);
-    border-color: transparent;
-    padding: 6px 10px;
-  }
+  .btn-ghost { background: none; color: var(--text-2); border-color: transparent; padding: 6px 10px; }
   .btn-ghost:hover { color: var(--text); background: var(--surface-2); }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
   .btn-row { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
-  /* Badges */
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 3px 9px;
-    border-radius: 99px;
-    font-size: 11px;
-    font-weight: 600;
-    white-space: nowrap;
-  }
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 99px; font-size: 11px; font-weight: 600; white-space: nowrap; }
   .badge-blue { background: var(--accent-bg); color: var(--accent-text); }
   .badge-green { background: var(--green-bg); color: var(--green); }
   .badge-amber { background: var(--amber-bg); color: var(--amber); }
   .badge-red { background: var(--red-bg); color: var(--red); }
   .badge-purple { background: var(--purple-bg); color: var(--purple); }
+  .badge-teal { background: var(--teal-bg); color: var(--teal); }
   .badge-gray { background: var(--surface-2); color: var(--text-2); }
-  /* List items */
-  .list-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--border);
-  }
+  .list-item { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border); }
   .list-item:last-child { border-bottom: none; padding-bottom: 0; }
   .list-item:first-child { padding-top: 0; }
-  .list-item-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-size: 16px;
-  }
+  .list-item-icon { width: 34px; height: 34px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
   .list-item-body { flex: 1; min-width: 0; }
   .list-item-title { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
   .list-item-sub { font-size: 12px; color: var(--text-3); }
   .list-item-meta { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
-  /* Progress bars */
   .prog-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-  .prog-label { font-size: 12px; color: var(--text-2); width: 130px; flex-shrink: 0; }
+  .prog-label { font-size: 12px; color: var(--text-2); width: 150px; flex-shrink: 0; }
   .prog-track { flex: 1; height: 5px; background: var(--surface-2); border-radius: 99px; overflow: hidden; }
   .prog-fill { height: 100%; border-radius: 99px; transition: width 0.4s ease; }
-  .prog-val { font-size: 12px; font-weight: 600; width: 30px; text-align: right; flex-shrink: 0; }
-  /* AI box */
-  .ai-box {
-    background: var(--accent-bg);
-    border: 1px solid rgba(26,86,219,0.15);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    margin-top: 14px;
-    display: none;
-  }
-  .ai-box-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--accent-text);
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
+  .prog-val { font-size: 12px; font-weight: 600; width: 34px; text-align: right; flex-shrink: 0; }
+  .ai-box { background: var(--accent-bg); border: 1px solid rgba(26,86,219,0.15); border-radius: var(--radius); padding: 14px 16px; margin-top: 14px; display: none; }
+  .ai-box-label { font-size: 11px; font-weight: 600; color: var(--accent-text); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
   .ai-box-body { font-size: 13px; line-height: 1.65; color: var(--text); white-space: pre-wrap; }
-  /* Empty */
-  .empty {
-    text-align: center;
-    padding: 32px;
-    color: var(--text-3);
-    font-size: 13px;
-  }
+  .empty { text-align: center; padding: 32px; color: var(--text-3); font-size: 13px; }
   .empty i { font-size: 28px; display: block; margin-bottom: 8px; opacity: 0.4; }
-  /* Chart */
   .bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 90px; padding-bottom: 20px; position: relative; }
   .bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end; }
   .bar { width: 100%; border-radius: 4px 4px 0 0; transition: height 0.3s ease; min-height: 3px; }
-  .bar-label { font-size: 10px; color: var(--text-3); position: absolute; bottom: 0; }
   .bar-val { font-size: 10px; font-weight: 600; color: var(--text-2); }
-  /* Spinner */
-  .spinner {
-    width: 14px; height: 14px;
-    border: 2px solid var(--border-strong);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    display: inline-block;
-  }
+  .spinner { width: 14px; height: 14px; border: 2px solid var(--border-strong); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  /* Insight box */
-  .insight {
-    background: var(--accent-bg);
-    border-radius: var(--radius-sm);
-    padding: 10px 14px;
-    font-size: 12px;
-    color: var(--accent-text);
-    margin-top: 12px;
-    line-height: 1.5;
-  }
-  /* Score input row */
+  .insight { background: var(--accent-bg); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 12px; color: var(--accent-text); margin-top: 12px; line-height: 1.5; }
+  .insight.warn { background: var(--amber-bg); color: var(--amber); }
+  .insight.danger { background: var(--red-bg); color: var(--red); }
+  .insight.good { background: var(--green-bg); color: var(--green); }
+  .insight strong { font-weight: 700; }
   .score-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
   .score-cell label { display: block; font-size: 11px; color: var(--text-3); margin-bottom: 4px; }
   .score-cell input { text-align: center; }
-  /* Streak display */
-  .streak-dots { display: flex; gap: 4px; margin-top: 6px; }
-  .streak-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border-strong); }
-  .streak-dot.done { background: var(--green); }
-  /* Delete button */
   .del-btn { background: none; border: none; cursor: pointer; color: var(--text-3); padding: 4px; border-radius: 4px; font-size: 15px; transition: color 0.1s; }
   .del-btn:hover { color: var(--red); }
-  /* Divider */
   .divider { height: 1px; background: var(--border); margin: 16px 0; }
-  /* Tag cloud */
   .tag-cloud { display: flex; flex-wrap: wrap; gap: 6px; }
-  .tag {
-    padding: 4px 10px;
-    border-radius: 99px;
-    font-size: 11px;
-    font-weight: 500;
-    background: var(--surface-2);
-    color: var(--text-2);
-    border: 1px solid var(--border);
-  }
-  /* Mobile */
+  .tag { padding: 4px 10px; border-radius: 99px; font-size: 11px; font-weight: 500; background: var(--surface-2); color: var(--text-2); border: 1px solid var(--border); }
+  .tabs { display: flex; gap: 4px; margin-bottom: 18px; border-bottom: 1px solid var(--border); }
+  .tab { padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--text-3); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .gate-banner { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: var(--radius); margin-bottom: 16px; font-size: 12.5px; }
+  .gate-banner.locked { background: var(--amber-bg); color: var(--amber); }
+  .gate-banner.open { background: var(--green-bg); color: var(--green); }
+  .gate-banner .gd { display: flex; gap: 4px; }
+  .gate-banner .gd-dot { width: 9px; height: 9px; border-radius: 50%; background: rgba(0,0,0,0.15); }
+  .gate-banner .gd-dot.done { background: currentColor; }
+  .link-row { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+  .link-row a { color: var(--accent); text-decoration: none; }
+  .link-row a:hover { text-decoration: underline; }
+  .cv-pill { display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 99px; font-size: 10.5px; font-weight: 600; background: var(--purple-bg); color: var(--purple); }
+  .quicklinks { display: flex; flex-wrap: wrap; gap: 8px; }
+  .qlink { display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px; border-radius: var(--radius-sm); background: var(--surface-2); border: 1px solid var(--border); color: var(--text); font-size: 12.5px; font-weight: 500; text-decoration: none; transition: background 0.15s, border-color 0.15s; }
+  .qlink:hover { background: var(--accent-bg); border-color: rgba(26,86,219,0.25); color: var(--accent-text); }
+  .qlink i { font-size: 15px; color: var(--text-3); }
+  .qlink:hover i { color: var(--accent); }
+  .qlink-edit-row { display: flex; gap: 6px; align-items: center; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border); }
+  .qlink-edit-row input { flex: 1; }
+  .topbar-shortcuts { display: flex; gap: 6px; margin-right: 8px; }
+  .topbar-shortcut { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: var(--radius-sm); background: var(--surface-2); color: var(--text-2); text-decoration: none; font-size: 15px; transition: background 0.15s, color 0.15s; }
+  .topbar-shortcut:hover { background: var(--accent-bg); color: var(--accent); }
   @media (max-width: 720px) {
     .sidebar { display: none; }
     .content { padding: 16px; }
@@ -376,54 +193,79 @@
 </head>
 <body>
 <div class="app-shell">
-  <!-- Sidebar -->
   <nav class="sidebar">
     <div class="sidebar-logo">
-      <div class="logo-mark">Growth OS</div>
-      <div class="logo-sub">by Thalvanes</div>
+      <div class="logo-mark">Growth OS v2</div>
+      <div class="logo-sub">by Thalvanes · rumo a C1</div>
     </div>
     <div class="sidebar-nav">
       <div class="nav-section">
-        <div class="nav-section-label">Aprendizado</div>
-        <button class="nav-item active" onclick="switchPanel('dashboard')">
+        <div class="nav-section-label">Visão Geral</div>
+        <button class="nav-item active" data-panel="dashboard" onclick="switchPanel('dashboard', this)">
           <i class="ti ti-layout-dashboard"></i> Dashboard
         </button>
-        <button class="nav-item" onclick="switchPanel('english')">
-          <i class="ti ti-microphone"></i> Inglês
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Inglês (Fala &amp; Escrita)</div>
+        <button class="nav-item" data-panel="english" onclick="switchPanel('english', this)">
+          <i class="ti ti-microphone"></i> Inglês Falado
           <span class="nav-badge" id="nav-sessions">0</span>
+        </button>
+        <button class="nav-item" data-panel="writing" onclick="switchPanel('writing', this)">
+          <i class="ti ti-pencil"></i> Escrita
+          <span class="nav-badge" id="nav-writing">0</span>
         </button>
       </div>
       <div class="nav-section">
         <div class="nav-section-label">Carreira</div>
-        <button class="nav-item" onclick="switchPanel('interviews')">
-          <i class="ti ti-users"></i> Entrevistas
-          <span class="nav-badge" id="nav-interviews">0</span>
+        <button class="nav-item" data-panel="mocks" onclick="switchPanel('mocks', this)">
+          <i class="ti ti-users-group"></i> Mock Interviews
+          <span class="nav-badge" id="nav-mocks">0</span>
         </button>
-        <button class="nav-item" onclick="switchPanel('pipeline')">
+        <button class="nav-item" data-panel="real" onclick="switchPanel('real', this)">
+          <i class="ti ti-briefcase"></i> Entrevistas Reais
+          <span class="nav-badge" id="nav-real">0</span>
+        </button>
+        <button class="nav-item" data-panel="pipeline" onclick="switchPanel('pipeline', this)">
           <i class="ti ti-send"></i> Pipeline
           <span class="nav-badge" id="nav-pipeline">0</span>
         </button>
       </div>
     </div>
+    <div class="sidebar-footer">
+      <div class="gate-pill">
+        <div class="gate-dots" id="sidebar-gate-dots"></div>
+        <span id="sidebar-gate-text" style="font-size:11px;">Gate: 0/3</span>
+      </div>
+    </div>
   </nav>
 
-  <!-- Main -->
   <div class="main">
-    <!-- Topbar -->
     <div class="topbar">
       <div>
         <div class="page-title" id="page-title">Dashboard</div>
-        <div class="page-sub" id="page-sub">Visão geral do progresso</div>
+        <div class="page-sub" id="page-sub">Visão consolidada — fala, escrita, entrevistas e pipeline</div>
       </div>
       <div class="topbar-actions">
+        <div class="topbar-shortcuts">
+          <a class="topbar-shortcut" href="https://otter.ai" target="_blank" rel="noopener" title="Otter.ai"><i class="ti ti-microphone-2"></i></a>
+          <a class="topbar-shortcut" href="https://meet.google.com" target="_blank" rel="noopener" title="Google Meet"><i class="ti ti-video"></i></a>
+        </div>
         <button class="btn btn-ghost" onclick="exportData()"><i class="ti ti-download"></i> Exportar</button>
+        <button class="btn btn-ghost" onclick="document.getElementById('import-file').click()"><i class="ti ti-upload"></i> Importar</button>
+        <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)">
       </div>
     </div>
 
     <div class="content">
 
-      <!-- DASHBOARD -->
+      <!-- ============ DASHBOARD ============ -->
       <div id="panel-dashboard" class="panel active">
+        <div class="gate-banner" id="gate-banner-dash">
+          <div class="gd" id="gate-banner-dots"></div>
+          <span id="gate-banner-text"></span>
+        </div>
+
         <div class="metric-grid">
           <div class="metric-card">
             <div class="metric-label">Sessões inglês</div>
@@ -431,32 +273,51 @@
             <div class="metric-sub" id="d-streak">Streak: 0 dias</div>
           </div>
           <div class="metric-card">
-            <div class="metric-label">Confiança média</div>
-            <div class="metric-value green" id="d-confidence">—</div>
-            <div class="metric-sub">Auto-avaliação 1–10</div>
+            <div class="metric-label">Entradas escrita</div>
+            <div class="metric-value teal" id="d-writing">0</div>
+            <div class="metric-sub" id="d-writing-streak">Streak: 0 dias</div>
           </div>
           <div class="metric-card">
-            <div class="metric-label">Entrevistas</div>
-            <div class="metric-value" id="d-interviews">0</div>
-            <div class="metric-sub" id="d-rate">Taxa de avanço: —</div>
+            <div class="metric-label">Mock interviews</div>
+            <div class="metric-value purple" id="d-mocks">0</div>
+            <div class="metric-sub" id="d-mocks-score">Score médio: —</div>
           </div>
           <div class="metric-card">
-            <div class="metric-label">Vagas no pipeline</div>
+            <div class="metric-label">Pipeline ativo</div>
             <div class="metric-value amber" id="d-pipeline">0</div>
             <div class="metric-sub" id="d-offers">Ofertas: 0</div>
           </div>
         </div>
 
         <div class="card">
-          <div class="card-title">Evolução de confiança — inglês</div>
-          <div id="d-chart-area">
-            <div class="empty"><i class="ti ti-chart-line"></i>Registre sessões para ver evolução</div>
+          <div class="card-title"><span><i class="ti ti-link card-title-icon"></i> Recursos rápidos</span></div>
+          <div class="quicklinks">
+            <a class="qlink" href="https://www.youtube.com/@LennysPodcast" target="_blank" rel="noopener"><i class="ti ti-brand-youtube"></i> Lenny's Podcast</a>
+            <a class="qlink" href="https://www.youtube.com/@heydavegerhardt" target="_blank" rel="noopener"><i class="ti ti-brand-youtube"></i> Dave Gerhardt</a>
+            <a class="qlink" href="https://otter.ai" target="_blank" rel="noopener"><i class="ti ti-microphone-2"></i> Otter.ai</a>
+            <a class="qlink" href="https://meet.google.com" target="_blank" rel="noopener"><i class="ti ti-video"></i> Google Meet</a>
           </div>
+          <div id="custom-links-list" class="quicklinks" style="margin-top:8px;"></div>
+          <div class="qlink-edit-row">
+            <input type="text" id="ql-name" placeholder="Nome (ex: Doc de perguntas de treino)">
+            <input type="text" id="ql-url" placeholder="https://...">
+            <button class="btn btn-secondary" onclick="addCustomLink()" style="flex-shrink:0;"><i class="ti ti-plus"></i></button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><span><i class="ti ti-bulb card-title-icon"></i> Inteligência cruzada</span></div>
+          <div id="d-cross-insights"><div class="empty"><i class="ti ti-chart-dots"></i>Registre dados em pelo menos 2 módulos para ver correlações</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Evolução de confiança — inglês falado</div>
+          <div id="d-chart-area"><div class="empty"><i class="ti ti-chart-line"></i>Registre sessões para ver evolução</div></div>
         </div>
 
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
           <div class="card">
-            <div class="card-title">Gaps mais frequentes</div>
+            <div class="card-title">Gaps mais frequentes (todas as fontes)</div>
             <div id="d-gaps"><div class="empty"><i class="ti ti-alert-circle"></i>Sem dados ainda</div></div>
           </div>
           <div class="card">
@@ -466,44 +327,53 @@
         </div>
       </div>
 
-      <!-- ENGLISH -->
+      <!-- ============ INGLÊS FALADO ============ -->
       <div id="panel-english" class="panel">
+        <div class="gate-banner" id="gate-banner-eng">
+          <div class="gd" id="gate-banner-dots-eng"></div>
+          <span id="gate-banner-text-eng"></span>
+        </div>
+
+        <div class="tabs">
+          <div class="tab active" data-etab="drill" onclick="switchEnglishTab('drill', this)">Drill (entrevista)</div>
+          <div class="tab" data-etab="shadowing" onclick="switchEnglishTab('shadowing', this)">Shadowing</div>
+        </div>
+
+        <div id="etab-drill">
         <div class="metric-grid">
-          <div class="metric-card">
-            <div class="metric-label">Total sessões</div>
-            <div class="metric-value blue" id="e-m-total">0</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">Streak atual</div>
-            <div class="metric-value green" id="e-m-streak">0 dias</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">Média confiança</div>
-            <div class="metric-value" id="e-m-conf">—</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">Fillers (última)</div>
-            <div class="metric-value amber" id="e-m-fill">—</div>
-          </div>
+          <div class="metric-card"><div class="metric-label">Total sessões</div><div class="metric-value blue" id="e-m-total">0</div></div>
+          <div class="metric-card"><div class="metric-label">Streak atual</div><div class="metric-value green" id="e-m-streak">0 dias</div></div>
+          <div class="metric-card"><div class="metric-label">Média confiança</div><div class="metric-value" id="e-m-conf">—</div></div>
+          <div class="metric-card"><div class="metric-label">'It was' última sessão</div><div class="metric-value amber" id="e-m-itwas">—</div></div>
         </div>
 
         <div class="card">
-          <div class="card-title">Registrar sessão</div>
+          <div class="card-title">Registrar sessão de drill</div>
           <div class="form-row">
             <div class="field"><label>Data</label><input type="date" id="e-date"></div>
-            <div class="field"><label>Foco</label>
-              <select id="e-focus">
-                <option>STAR structure</option>
-                <option>Filler words</option>
-                <option>Pronúncia</option>
-                <option>Velocidade / ritmo</option>
-                <option>Vocabulário B2B</option>
-                <option>Entrevista completa</option>
-                <option>Shadowing</option>
+            <div class="field"><label>Pergunta-base (das 3 fixas, ou nova)</label>
+              <select id="e-question">
+                <option value="career">1. Career walkthrough</option>
+                <option value="metric">2. Campaign/metric story</option>
+                <option value="diff">3. Differentiation</option>
+                <option value="budget">4. Budget allocation (Fase 2)</option>
+                <option value="disagree">5. Disagreement w/ founder (Fase 2)</option>
+                <option value="other">Outra</option>
               </select>
             </div>
           </div>
-          <div class="field"><label>Transcrição (Otter.ai)</label><textarea id="e-transcript" placeholder="Cole aqui a transcrição da sessão de prática..."></textarea></div>
+          <div class="field"><label>Foco da sessão</label>
+            <select id="e-focus">
+              <option>Eliminar "it was" resumptivo</option>
+              <option>Filler words</option>
+              <option>Pronúncia</option>
+              <option>Velocidade / ritmo</option>
+              <option>Vocabulário B2B</option>
+              <option>Liderar com "I" (anti-"we" erasure)</option>
+              <option>Entrevista completa</option>
+            </select>
+          </div>
+          <div class="field"><label>Transcrição (Otter.ai)</label><textarea class="tall" id="e-transcript" placeholder="Cole aqui a transcrição da sessão de prática..."></textarea></div>
           <div class="form-row-3">
             <div class="field"><label>Confiança (1–10)</label><input type="number" id="e-conf" min="1" max="10" placeholder="7"></div>
             <div class="field"><label>Filler words</label><input type="number" id="e-fill" placeholder="ex: 12"></div>
@@ -513,6 +383,7 @@
             <div class="field"><label>O que funcionou</label><input type="text" id="e-win" placeholder="ex: abri com resultado, mantive estrutura"></div>
             <div class="field"><label>Principal gap</label><input type="text" id="e-gap" placeholder="ex: fillers quando hesitei na resposta"></div>
           </div>
+          <div class="field hint">A contagem de "it was" resumptivo é extraída automaticamente da transcrição ao analisar/salvar.</div>
           <div class="btn-row">
             <button class="btn btn-primary" onclick="analyzeSession()"><i class="ti ti-brain"></i> Analisar com IA</button>
             <button class="btn btn-secondary" onclick="saveSession()"><i class="ti ti-device-floppy"></i> Salvar sessão</button>
@@ -527,39 +398,194 @@
           <div class="card-title">Histórico de sessões</div>
           <div id="e-history"><div class="empty"><i class="ti ti-microphone-off"></i>Nenhuma sessão ainda</div></div>
         </div>
+        </div><!-- /etab-drill -->
+
+        <div id="etab-shadowing" style="display:none;">
+          <div class="metric-grid">
+            <div class="metric-card"><div class="metric-label">Total práticas</div><div class="metric-value blue" id="sh-m-total">0</div></div>
+            <div class="metric-card"><div class="metric-label">Minutos totais</div><div class="metric-value green" id="sh-m-minutes">0</div></div>
+            <div class="metric-card"><div class="metric-label">Streak shadowing</div><div class="metric-value" id="sh-m-streak">0 dias</div></div>
+            <div class="metric-card"><div class="metric-label">Canal mais usado</div><div class="metric-value amber" id="sh-m-channel" style="font-size:15px;">—</div></div>
+          </div>
+
+          <div class="card">
+            <div class="card-title"><span>Registrar prática de shadowing</span></div>
+            <div class="quicklinks" style="margin-bottom:14px;">
+              <a class="qlink" href="https://www.youtube.com/@LennysPodcast" target="_blank" rel="noopener"><i class="ti ti-brand-youtube"></i> Lenny's Podcast</a>
+              <a class="qlink" href="https://www.youtube.com/@heydavegerhardt" target="_blank" rel="noopener"><i class="ti ti-brand-youtube"></i> Dave Gerhardt</a>
+            </div>
+            <div class="form-row-3">
+              <div class="field"><label>Data</label><input type="date" id="sh-date"></div>
+              <div class="field"><label>Canal</label>
+                <select id="sh-channel">
+                  <option>Lenny's Podcast</option>
+                  <option>Dave Gerhardt</option>
+                  <option>Outro</option>
+                </select>
+              </div>
+              <div class="field"><label>Minutos praticados</label><input type="number" id="sh-minutes" placeholder="ex: 20"></div>
+            </div>
+            <div class="field"><label>Notas (opcional)</label><input type="text" id="sh-notes" placeholder="ex: episódio sobre growth, ritmo mais rápido que o normal"></div>
+            <div class="btn-row">
+              <button class="btn btn-primary" onclick="saveShadowing()"><i class="ti ti-device-floppy"></i> Salvar prática</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Histórico de shadowing</div>
+            <div id="sh-history"><div class="empty"><i class="ti ti-headphones"></i>Nenhuma prática registrada ainda</div></div>
+          </div>
+        </div><!-- /etab-shadowing -->
       </div>
 
-      <!-- INTERVIEWS -->
-      <div id="panel-interviews" class="panel">
+      <!-- ============ ESCRITA ============ -->
+      <div id="panel-writing" class="panel">
         <div class="metric-grid">
-          <div class="metric-card">
-            <div class="metric-label">Total</div>
-            <div class="metric-value blue" id="i-m-total">0</div>
+          <div class="metric-card"><div class="metric-label">Total entradas</div><div class="metric-value teal" id="w-m-total">0</div></div>
+          <div class="metric-card"><div class="metric-label">Streak journaling</div><div class="metric-value green" id="w-m-streak">0 dias</div></div>
+          <div class="metric-card"><div class="metric-label">Média clareza</div><div class="metric-value" id="w-m-clarity">—</div></div>
+          <div class="metric-card"><div class="metric-label">Erros recorrentes</div><div class="metric-value amber" id="w-m-errors">—</div></div>
+        </div>
+
+        <div class="tabs">
+          <div class="tab active" data-wtab="journal" onclick="switchWritingTab('journal', this)">Journaling diário</div>
+          <div class="tab" data-wtab="prepared" onclick="switchWritingTab('prepared', this)">Respostas escritas (perguntas padrão)</div>
+        </div>
+
+        <div id="wtab-journal">
+          <div class="card">
+            <div class="card-title">Nova entrada de journaling</div>
+            <div class="field"><label>Data</label><input type="date" id="w-date"></div>
+            <div class="field"><label>Texto em inglês</label><textarea class="tall" id="w-text" placeholder="Escreva seu journaling em inglês aqui..."></textarea></div>
+            <div class="field"><label>Tema do dia (opcional)</label><input type="text" id="w-topic" placeholder="ex: reflexão sobre a semana, gratidão, desafio do dia"></div>
+            <div class="btn-row">
+              <button class="btn btn-primary" onclick="analyzeWriting('journal')"><i class="ti ti-brain"></i> Pedir feedback à IA</button>
+              <button class="btn btn-secondary" onclick="saveWriting('journal')"><i class="ti ti-device-floppy"></i> Salvar entrada</button>
+            </div>
+            <div class="ai-box" id="w-ai-box-journal">
+              <div class="ai-box-label"><span id="w-spin-journal"></span> Feedback da IA</div>
+              <div class="ai-box-body" id="w-ai-body-journal"></div>
+            </div>
           </div>
-          <div class="metric-card">
-            <div class="metric-label">Avançaram</div>
-            <div class="metric-value green" id="i-m-adv">0</div>
+          <div class="card">
+            <div class="card-title">Histórico de journaling</div>
+            <div id="w-history-journal"><div class="empty"><i class="ti ti-notebook"></i>Nenhuma entrada ainda</div></div>
           </div>
-          <div class="metric-card">
-            <div class="metric-label">Taxa de avanço</div>
-            <div class="metric-value" id="i-m-rate">—</div>
+        </div>
+
+        <div id="wtab-prepared" style="display:none;">
+          <div class="card">
+            <div class="card-title">Nova resposta escrita</div>
+            <div class="form-row">
+              <div class="field"><label>Data</label><input type="date" id="wp-date"></div>
+              <div class="field"><label>Categoria da pergunta</label>
+                <select id="wp-category">
+                  <option>Posicionamento / Differentiation</option>
+                  <option>Métricas / CAC / LTV / ROAS</option>
+                  <option>Liderança / gestão de conflito</option>
+                  <option>Estratégia de canal / funil</option>
+                  <option>Budget allocation</option>
+                  <option>Outra</option>
+                </select>
+              </div>
+            </div>
+            <div class="field"><label>Pergunta (cole do doc de perguntas padrão)</label><input type="text" id="wp-question" placeholder="ex: How do you prioritize channels with a limited budget?"></div>
+            <div class="field"><label>Sua resposta em inglês</label><textarea class="tall" id="wp-answer" placeholder="Escreva sua resposta..."></textarea></div>
+            <div class="btn-row">
+              <button class="btn btn-primary" onclick="analyzeWriting('prepared')"><i class="ti ti-brain"></i> Pedir feedback à IA</button>
+              <button class="btn btn-secondary" onclick="saveWriting('prepared')"><i class="ti ti-device-floppy"></i> Salvar resposta</button>
+            </div>
+            <div class="ai-box" id="w-ai-box-prepared">
+              <div class="ai-box-label"><span id="w-spin-prepared"></span> Feedback da IA</div>
+              <div class="ai-box-body" id="w-ai-body-prepared"></div>
+            </div>
           </div>
-          <div class="metric-card">
-            <div class="metric-label">Score médio</div>
-            <div class="metric-value amber" id="i-m-score">—</div>
+          <div class="card">
+            <div class="card-title">Banco de respostas preparadas</div>
+            <div id="w-history-prepared"><div class="empty"><i class="ti ti-file-text"></i>Nenhuma resposta ainda</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ MOCK INTERVIEWS ============ -->
+      <div id="panel-mocks" class="panel">
+        <div class="metric-grid">
+          <div class="metric-card"><div class="metric-label">Total mocks</div><div class="metric-value purple" id="m-m-total">0</div></div>
+          <div class="metric-card"><div class="metric-label">Score médio</div><div class="metric-value" id="m-m-score">—</div></div>
+          <div class="metric-card"><div class="metric-label">Maior gap</div><div class="metric-value amber" id="m-m-gap" style="font-size:15px;">—</div></div>
+          <div class="metric-card"><div class="metric-label">Tendência</div><div class="metric-value" id="m-m-trend">—</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Registrar mock interview</div>
+          <div class="hint" style="margin-bottom:10px; color:var(--text-3); font-size:11.5px;">Use isso para as entrevistas de treino (ex: simulações com IA estilo Justin Brown/Ralph Donovan) — não confunda com entrevistas reais de vaga, que ficam em "Entrevistas Reais".</div>
+          <div class="form-row">
+            <div class="field"><label>Plataforma/Persona simulada</label><input type="text" id="m-persona" placeholder="ex: New North - Justin Brown (AI)"></div>
+            <div class="field"><label>Data</label><input type="date" id="m-date"></div>
+          </div>
+          <div class="field">
+            <label>Scores por dimensão (1–5)</label>
+            <div class="score-grid">
+              <div class="score-cell"><label>STAR</label><input type="number" id="m-star" min="1" max="5" placeholder="—"></div>
+              <div class="score-cell"><label>Fluência</label><input type="number" id="m-flu" min="1" max="5" placeholder="—"></div>
+              <div class="score-cell"><label>Presença</label><input type="number" id="m-pres" min="1" max="5" placeholder="—"></div>
+              <div class="score-cell"><label>Técnico</label><input type="number" id="m-tech" min="1" max="5" placeholder="—"></div>
+              <div class="score-cell"><label>Fit</label><input type="number" id="m-fit" min="1" max="5" placeholder="—"></div>
+            </div>
+          </div>
+          <div class="field"><label>Transcrição</label><textarea class="tall" id="m-transcript" placeholder="Cole a transcrição da simulação..."></textarea></div>
+          <div class="form-row">
+            <div class="field"><label>O que funcionou</label><input type="text" id="m-win" placeholder="ex: abri com resultado forte"></div>
+            <div class="field"><label>Gap principal</label><input type="text" id="m-gap" placeholder="ex: 'why this company' fraco"></div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="analyzeMock()"><i class="ti ti-brain"></i> Diagnosticar com IA</button>
+            <button class="btn btn-secondary" onclick="saveMock()"><i class="ti ti-device-floppy"></i> Salvar mock</button>
+          </div>
+          <div class="ai-box" id="m-ai-box">
+            <div class="ai-box-label"><span id="m-spin"></span> Diagnóstico da IA</div>
+            <div class="ai-box-body" id="m-ai-body"></div>
           </div>
         </div>
 
         <div class="card">
-          <div class="card-title">Registrar entrevista</div>
+          <div class="card-title">Padrões identificados</div>
+          <div id="m-patterns"><div class="empty"><i class="ti ti-chart-radar"></i>Registre ao menos 2 mocks</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Histórico</div>
+          <div id="m-history"><div class="empty"><i class="ti ti-users-group"></i>Nenhum mock ainda</div></div>
+        </div>
+      </div>
+
+      <!-- ============ ENTREVISTAS REAIS ============ -->
+      <div id="panel-real" class="panel">
+        <div class="metric-grid">
+          <div class="metric-card"><div class="metric-label">Total</div><div class="metric-value blue" id="r-m-total">0</div></div>
+          <div class="metric-card"><div class="metric-label">Avançaram</div><div class="metric-value green" id="r-m-adv">0</div></div>
+          <div class="metric-card"><div class="metric-label">Taxa de avanço</div><div class="metric-value" id="r-m-rate">—</div></div>
+          <div class="metric-card"><div class="metric-label">Ofertas</div><div class="metric-value amber" id="r-m-offers">0</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Registrar entrevista real</div>
           <div class="form-row">
-            <div class="field"><label>Empresa</label><input type="text" id="i-co" placeholder="ex: New North"></div>
-            <div class="field"><label>Vaga</label><input type="text" id="i-role" placeholder="ex: Demand Gen Manager"></div>
+            <div class="field"><label>Empresa</label><input type="text" id="r-co" placeholder="ex: Metrobi"></div>
+            <div class="field"><label>Vaga</label><input type="text" id="r-role" placeholder="ex: Head of Demand Generation"></div>
           </div>
-          <div class="form-row">
-            <div class="field"><label>Data</label><input type="date" id="i-date"></div>
+          <div class="form-row-3">
+            <div class="field"><label>Etapa</label>
+              <select id="r-stage">
+                <option>Screening / recrutador</option>
+                <option>Hiring manager</option>
+                <option>Painel / time</option>
+                <option>Final / founder</option>
+              </select>
+            </div>
+            <div class="field"><label>Data</label><input type="date" id="r-date"></div>
             <div class="field"><label>Resultado</label>
-              <select id="i-outcome">
+              <select id="r-outcome">
                 <option value="pending">Aguardando</option>
                 <option value="advanced">Avançou</option>
                 <option value="rejected">Não avançou</option>
@@ -567,62 +593,66 @@
               </select>
             </div>
           </div>
+          <div class="field"><label>Vaga vinculada do Pipeline (opcional)</label>
+            <select id="r-pipeline-link"><option value="">— nenhuma —</option></select>
+          </div>
           <div class="field">
             <label>Scores por dimensão (1–5)</label>
             <div class="score-grid">
-              <div class="score-cell"><label>STAR</label><input type="number" id="i-star" min="1" max="5" placeholder="—"></div>
-              <div class="score-cell"><label>Fluência</label><input type="number" id="i-flu" min="1" max="5" placeholder="—"></div>
-              <div class="score-cell"><label>Presença</label><input type="number" id="i-pres" min="1" max="5" placeholder="—"></div>
-              <div class="score-cell"><label>Técnico</label><input type="number" id="i-tech" min="1" max="5" placeholder="—"></div>
-              <div class="score-cell"><label>Fit</label><input type="number" id="i-fit" min="1" max="5" placeholder="—"></div>
+              <div class="score-cell"><label>STAR</label><input type="number" id="r-star" min="1" max="5" placeholder="—"></div>
+              <div class="score-cell"><label>Fluência</label><input type="number" id="r-flu" min="1" max="5" placeholder="—"></div>
+              <div class="score-cell"><label>Presença</label><input type="number" id="r-pres" min="1" max="5" placeholder="—"></div>
+              <div class="score-cell"><label>Técnico</label><input type="number" id="r-tech" min="1" max="5" placeholder="—"></div>
+              <div class="score-cell"><label>Fit</label><input type="number" id="r-fit" min="1" max="5" placeholder="—"></div>
             </div>
           </div>
-          <div class="field"><label>Transcrição (opcional)</label><textarea id="i-transcript" placeholder="Cole trecho do Otter.ai..."></textarea></div>
+          <div class="field"><label>Transcrição (opcional)</label><textarea id="r-transcript" placeholder="Cole trecho do Otter.ai..."></textarea></div>
           <div class="form-row">
-            <div class="field"><label>O que funcionou</label><input type="text" id="i-win" placeholder="ex: abri com resultado forte"></div>
-            <div class="field"><label>Gap principal</label><input type="text" id="i-gap" placeholder="ex: 'why this company' fraco"></div>
+            <div class="field"><label>O que funcionou</label><input type="text" id="r-win" placeholder="ex: abri com resultado forte"></div>
+            <div class="field"><label>Gap principal</label><input type="text" id="r-gap" placeholder="ex: 'why this company' fraco"></div>
           </div>
-          <div class="field"><label>Feedback da empresa (se recebeu)</label><input type="text" id="i-fb" placeholder="ex: accent concerns, prefer local candidates"></div>
+          <div class="field"><label>Feedback da empresa (se recebeu)</label><input type="text" id="r-fb" placeholder="ex: accent concerns, prefer local candidates"></div>
           <div class="btn-row">
-            <button class="btn btn-primary" onclick="analyzeInterview()"><i class="ti ti-brain"></i> Diagnosticar com IA</button>
-            <button class="btn btn-secondary" onclick="saveInterview()"><i class="ti ti-device-floppy"></i> Salvar entrevista</button>
+            <button class="btn btn-primary" onclick="analyzeReal()"><i class="ti ti-brain"></i> Diagnosticar com IA</button>
+            <button class="btn btn-secondary" onclick="saveReal()"><i class="ti ti-device-floppy"></i> Salvar entrevista</button>
           </div>
-          <div class="ai-box" id="i-ai-box">
-            <div class="ai-box-label"><span id="i-spin"></span> Diagnóstico da IA</div>
-            <div class="ai-box-body" id="i-ai-body"></div>
+          <div class="ai-box" id="r-ai-box">
+            <div class="ai-box-label"><span id="r-spin"></span> Diagnóstico da IA</div>
+            <div class="ai-box-body" id="r-ai-body"></div>
           </div>
         </div>
 
         <div class="card">
           <div class="card-title">Padrões identificados</div>
-          <div id="i-patterns"><div class="empty"><i class="ti ti-chart-radar"></i>Registre ao menos 2 entrevistas</div></div>
+          <div id="r-patterns"><div class="empty"><i class="ti ti-chart-radar"></i>Registre ao menos 2 entrevistas</div></div>
         </div>
 
         <div class="card">
           <div class="card-title">Histórico</div>
-          <div id="i-history"><div class="empty"><i class="ti ti-users"></i>Nenhuma entrevista ainda</div></div>
+          <div id="r-history"><div class="empty"><i class="ti ti-briefcase"></i>Nenhuma entrevista ainda</div></div>
         </div>
       </div>
 
-      <!-- PIPELINE -->
+      <!-- ============ PIPELINE ============ -->
       <div id="panel-pipeline" class="panel">
         <div class="metric-grid">
-          <div class="metric-card">
-            <div class="metric-label">Aplicadas</div>
-            <div class="metric-value blue" id="p-m-total">0</div>
+          <div class="metric-card"><div class="metric-label">Aplicadas</div><div class="metric-value blue" id="p-m-total">0</div></div>
+          <div class="metric-card"><div class="metric-label">Em processo</div><div class="metric-value amber" id="p-m-active">0</div></div>
+          <div class="metric-card"><div class="metric-label">Ofertas</div><div class="metric-value green" id="p-m-offers">0</div></div>
+          <div class="metric-card"><div class="metric-label">Conversion rate</div><div class="metric-value" id="p-m-conv">—</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Versões de currículo</div>
+          <div class="hint" style="margin-bottom:10px; color:var(--text-3); font-size:11.5px;">Cadastre cada versão de CV que você usa. Depois, ao adicionar uma vaga no pipeline, vincule a versão usada — isso permite comparar taxa de conversão por versão.</div>
+          <div class="form-row">
+            <div class="field"><label>Nome da versão</label><input type="text" id="cv-name" placeholder="ex: CV v3 - Senior Demand Gen"></div>
+            <div class="field"><label>Link (Drive/PDF)</label><input type="text" id="cv-link" placeholder="https://..."></div>
           </div>
-          <div class="metric-card">
-            <div class="metric-label">Em processo</div>
-            <div class="metric-value amber" id="p-m-active">0</div>
+          <div class="btn-row">
+            <button class="btn btn-secondary" onclick="addCvVersion()"><i class="ti ti-plus"></i> Adicionar versão</button>
           </div>
-          <div class="metric-card">
-            <div class="metric-label">Ofertas</div>
-            <div class="metric-value green" id="p-m-offers">0</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">Conversion rate</div>
-            <div class="metric-value" id="p-m-conv">—</div>
-          </div>
+          <div id="cv-list" style="margin-top:12px;"></div>
         </div>
 
         <div class="card">
@@ -638,6 +668,8 @@
                 <option>Remote Leverage</option>
                 <option>Somewhere</option>
                 <option>Wellfound</option>
+                <option>Remotive</option>
+                <option>We Work Remotely</option>
                 <option>LinkedIn</option>
                 <option>Direto</option>
               </select>
@@ -653,10 +685,24 @@
             </div>
             <div class="field"><label>Data</label><input type="date" id="p-date"></div>
           </div>
+          <div class="form-row">
+            <div class="field"><label>Versão de CV usada</label><select id="p-cv"><option value="">— não especificado —</option></select></div>
+            <div class="field"><label>Link da vaga</label><input type="text" id="p-joblink" placeholder="https://..."></div>
+          </div>
           <div class="field"><label>Notas</label><input type="text" id="p-notes" placeholder="ex: B2B SaaS, 50 pessoas, async-first, $80k+"></div>
           <div class="btn-row">
             <button class="btn btn-primary" onclick="saveJob()"><i class="ti ti-plus"></i> Adicionar</button>
           </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Conversão por versão de CV</div>
+          <div id="p-cv-conversion"><div class="empty"><i class="ti ti-file-analytics"></i>Cadastre versões e vincule a vagas para ver conversão</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Conversão por canal</div>
+          <div id="p-channel-conversion"><div class="empty"><i class="ti ti-route"></i>Sem dados ainda</div></div>
         </div>
 
         <div class="card">
@@ -665,41 +711,138 @@
         </div>
       </div>
 
-    </div><!-- /content -->
-  </div><!-- /main -->
-</div><!-- /app-shell -->
+    </div>
+  </div>
+</div>
 
 <script>
-const S = {
-  get: k => { try { return JSON.parse(localStorage.getItem(k)) || []; } catch { return []; } },
-  set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+/* ============================================================
+   STORAGE — persistente via window.storage, com fallback local
+   ============================================================ */
+const STORAGE_KEYS = {
+  sessions: 'eng_sessions', writing: 'writing_entries', mocks: 'mock_interviews',
+  real: 'real_interviews', jobs: 'pipeline_jobs', cvs: 'cv_versions',
+  shadowing: 'shadowing_entries', customLinks: 'custom_links'
 };
-const KS = 'glos_sessions', KI = 'glos_interviews', KJ = 'glos_jobs';
-let sessions = S.get(KS), interviews = S.get(KI), jobs = S.get(KJ);
+let sessions = [], writingEntries = [], mocks = [], realInterviews = [], jobs = [], cvVersions = [], shadowingEntries = [], customLinks = [];
 
+async function loadAll() {
+  const results = await Promise.all(Object.entries(STORAGE_KEYS).map(async ([varName, key]) => {
+    try {
+      const r = await window.storage.get(key, false);
+      return [varName, r && r.value ? JSON.parse(r.value) : []];
+    } catch { return [varName, []]; }
+  }));
+  const map = Object.fromEntries(results);
+  sessions = map.sessions; writingEntries = map.writing; mocks = map.mocks;
+  realInterviews = map.real; jobs = map.jobs; cvVersions = map.cvs;
+  shadowingEntries = map.shadowing; customLinks = map.customLinks;
+}
+
+async function persist(varName) {
+  const dataMap = { sessions, writing: writingEntries, mocks, real: realInterviews, jobs, cvs: cvVersions, shadowing: shadowingEntries, customLinks };
+  const key = STORAGE_KEYS[varName];
+  try { await window.storage.set(key, JSON.stringify(dataMap[varName]), false); }
+  catch (e) { console.error('Storage error', varName, e); }
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
 const pages = {
-  dashboard: { title: 'Dashboard', sub: 'Visão geral do progresso' },
-  english:   { title: 'Inglês', sub: 'Prática de inglês falado' },
-  interviews:{ title: 'Entrevistas', sub: 'Registro e diagnóstico' },
-  pipeline:  { title: 'Pipeline', sub: 'Vagas aplicadas' }
+  dashboard: { title: 'Dashboard', sub: 'Visão consolidada — fala, escrita, entrevistas e pipeline' },
+  english:   { title: 'Inglês Falado', sub: 'Drills de fala — rumo ao gate de 3 sessões limpas' },
+  writing:   { title: 'Escrita', sub: 'Journaling diário e respostas escritas preparadas' },
+  mocks:     { title: 'Mock Interviews', sub: 'Simulações de entrevista — conteúdo e estrutura' },
+  real:      { title: 'Entrevistas Reais', sub: 'Processos reais com empresas' },
+  pipeline:  { title: 'Pipeline', sub: 'Vagas aplicadas, canais e versões de CV' }
 };
 
-function switchPanel(name) {
-  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.panel').forEach(el => el.classList.remove('active'));
+function switchPanel(name, el) {
+  document.querySelectorAll('.nav-item').forEach(e => e.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(e => e.classList.remove('active'));
   document.getElementById('panel-' + name).classList.add('active');
-  event.currentTarget.classList.add('active');
+  if (el) el.classList.add('active');
   document.getElementById('page-title').textContent = pages[name].title;
   document.getElementById('page-sub').textContent = pages[name].sub;
   if (name === 'dashboard') renderDashboard();
+  if (name === 'pipeline') refreshPipelineSelects();
+  if (name === 'real') refreshPipelineSelects();
+}
+
+function switchWritingTab(name, el) {
+  document.querySelectorAll('[data-wtab]').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('wtab-journal').style.display = name === 'journal' ? '' : 'none';
+  document.getElementById('wtab-prepared').style.display = name === 'prepared' ? '' : 'none';
+}
+
+function switchEnglishTab(name, el) {
+  document.querySelectorAll('[data-etab]').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('etab-drill').style.display = name === 'drill' ? '' : 'none';
+  document.getElementById('etab-shadowing').style.display = name === 'shadowing' ? '' : 'none';
 }
 
 function today() { return new Date().toISOString().slice(0,10); }
 function fmt(d) { return d ? d.slice(5) : ''; }
+function uid() { return Date.now() + Math.floor(Math.random()*1000); }
+function clearFields(ids) { ids.forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; }); }
+function escapeHtml(s) { return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-function calcStreak() {
-  if (!sessions.length) return 0;
-  const dates = [...new Set(sessions.map(s => s.date))].sort().reverse();
+/* ============================================================
+   GATE LOGIC — 3 sessões consecutivas limpas (zero "it was" resumptivo)
+   ============================================================ */
+function countResumptiveItWas(text) {
+  if (!text) return null;
+  // Captura padrões tipo "X, it was Y" / "... it was important" em contexto resumptivo
+  const matches = text.match(/\b\w+(,)?\s+it\s+was\b/gi) || [];
+  return matches.length;
+}
+
+function getGateStatus() {
+  // últimas sessões (mais recente primeiro), considerando apenas as que têm transcrição
+  const withCount = sessions
+    .filter(s => s.itWasCount !== null && s.itWasCount !== undefined)
+    .slice(0, 3);
+  let consecutiveClean = 0;
+  for (const s of withCount) {
+    if (s.itWasCount === 0) consecutiveClean++;
+    else break;
+  }
+  const isOpen = consecutiveClean >= 3 && withCount.length >= 3;
+  return { consecutiveClean: Math.min(consecutiveClean, 3), isOpen, hasData: withCount.length > 0 };
+}
+
+function renderGateBanner(bannerId, dotsId, textId) {
+  const banner = document.getElementById(bannerId);
+  const dotsEl = document.getElementById(dotsId);
+  const textEl = document.getElementById(textId);
+  if (!banner) return;
+  const g = getGateStatus();
+  banner.className = 'gate-banner ' + (g.isOpen ? 'open' : 'locked');
+  dotsEl.innerHTML = [0,1,2].map(i => `<div class="gd-dot ${i < g.consecutiveClean ? 'done' : ''}"></div>`).join('');
+  if (g.isOpen) {
+    textEl.innerHTML = '<strong>Gate aberto.</strong> 3 sessões consecutivas com zero "it was" resumptivo. Pode rotacionar para Fase 2 (budget allocation, disagreement).';
+  } else if (g.hasData) {
+    textEl.innerHTML = `<strong>Gate fechado.</strong> ${g.consecutiveClean}/3 sessões limpas consecutivas. Continue no mesmo padrão até fechar — sem rotacionar pergunta.`;
+  } else {
+    textEl.innerHTML = '<strong>Gate fechado.</strong> Registre sessões com transcrição para começar a medir o "it was" resumptivo.';
+  }
+}
+
+function renderSidebarGate() {
+  const g = getGateStatus();
+  document.getElementById('sidebar-gate-dots').innerHTML = [0,1,2].map(i => `<div class="gate-dot ${i < g.consecutiveClean ? 'done' : ''}"></div>`).join('');
+  document.getElementById('sidebar-gate-text').textContent = `Gate: ${g.consecutiveClean}/3`;
+}
+
+/* ============================================================
+   STREAK helper (generic)
+   ============================================================ */
+function calcStreak(dateList) {
+  if (!dateList.length) return 0;
+  const dates = [...new Set(dateList)].sort().reverse();
   let streak = 0, d = new Date();
   for (const ds of dates) {
     const diff = Math.round((d - new Date(ds)) / 86400000);
@@ -708,12 +851,18 @@ function calcStreak() {
   return streak;
 }
 
-function saveSession() {
+/* ============================================================
+   ENGLISH (SPOKEN) MODULE
+   ============================================================ */
+async function saveSession() {
+  const transcript = document.getElementById('e-transcript').value;
   const s = {
-    id: Date.now(),
+    id: uid(),
     date: document.getElementById('e-date').value || today(),
+    question: document.getElementById('e-question').value,
     focus: document.getElementById('e-focus').value,
-    transcript: document.getElementById('e-transcript').value,
+    transcript,
+    itWasCount: transcript ? countResumptiveItWas(transcript) : null,
     confidence: parseInt(document.getElementById('e-conf').value) || null,
     fillers: parseInt(document.getElementById('e-fill').value) || null,
     duration: parseInt(document.getElementById('e-dur').value) || null,
@@ -721,128 +870,305 @@ function saveSession() {
     gap: document.getElementById('e-gap').value,
   };
   sessions.unshift(s);
-  S.set(KS, sessions);
-  renderSessionHistory();
-  updateEnglishMetrics();
-  updateNavBadges();
+  await persist('sessions');
+  renderSessionHistory(); updateEnglishMetrics(); updateNavBadges();
+  renderGateBanner('gate-banner-eng','gate-banner-dots-eng','gate-banner-text-eng');
+  renderSidebarGate();
   clearFields(['e-transcript','e-win','e-gap','e-conf','e-fill','e-dur']);
-}
-
-function clearFields(ids) {
-  ids.forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
 }
 
 function renderSessionHistory() {
   const el = document.getElementById('e-history');
   if (!sessions.length) { el.innerHTML = '<div class="empty"><i class="ti ti-microphone-off"></i>Nenhuma sessão ainda</div>'; return; }
-  el.innerHTML = sessions.slice(0,10).map(s => `
+  el.innerHTML = sessions.slice(0,15).map(s => `
     <div class="list-item">
-      <div class="list-item-icon" style="background:var(--accent-bg);color:var(--accent);">
-        <i class="ti ti-microphone"></i>
-      </div>
+      <div class="list-item-icon" style="background:var(--accent-bg);color:var(--accent);"><i class="ti ti-microphone"></i></div>
       <div class="list-item-body">
-        <div class="list-item-title">${s.focus}</div>
-        <div class="list-item-sub">${s.date}${s.duration ? ' · ' + s.duration + 'min' : ''}${s.win ? ' · ' + s.win : ''}</div>
-        ${s.gap ? '<div class="list-item-sub" style="margin-top:2px;">Gap: ' + s.gap + '</div>' : ''}
+        <div class="list-item-title">${escapeHtml(s.focus)}</div>
+        <div class="list-item-sub">${s.date}${s.duration ? ' · ' + s.duration + 'min' : ''}${s.win ? ' · ' + escapeHtml(s.win) : ''}</div>
+        ${s.gap ? '<div class="list-item-sub" style="margin-top:2px;">Gap: ' + escapeHtml(s.gap) + '</div>' : ''}
       </div>
       <div class="list-item-meta">
         ${s.confidence ? '<span class="badge badge-green">' + s.confidence + '/10</span>' : ''}
-        ${s.fillers != null ? '<span class="badge badge-amber">' + s.fillers + ' fillers</span>' : ''}
+        ${s.itWasCount !== null ? '<span class="badge ' + (s.itWasCount===0?'badge-green':'badge-red') + '">' + s.itWasCount + ' "it was"</span>' : ''}
+        <button class="del-btn" onclick="deleteSession(${s.id})"><i class="ti ti-trash"></i></button>
       </div>
     </div>`).join('');
+}
+
+async function deleteSession(id) {
+  sessions = sessions.filter(s => s.id !== id);
+  await persist('sessions');
+  renderSessionHistory(); updateEnglishMetrics(); updateNavBadges();
+  renderGateBanner('gate-banner-eng','gate-banner-dots-eng','gate-banner-text-eng');
+  renderSidebarGate();
 }
 
 function updateEnglishMetrics() {
   document.getElementById('e-m-total').textContent = sessions.length;
-  document.getElementById('e-m-streak').textContent = calcStreak() + ' dias';
+  document.getElementById('e-m-streak').textContent = calcStreak(sessions.map(s=>s.date)) + ' dias';
   const withConf = sessions.filter(s => s.confidence);
   if (withConf.length) {
     const avg = withConf.reduce((a,b) => a + b.confidence, 0) / withConf.length;
     document.getElementById('e-m-conf').textContent = avg.toFixed(1) + '/10';
-  }
-  const lf = sessions.find(s => s.fillers != null);
-  document.getElementById('e-m-fill').textContent = lf ? lf.fillers : '—';
+  } else { document.getElementById('e-m-conf').textContent = '—'; }
+  const lastWithCount = sessions.find(s => s.itWasCount !== null && s.itWasCount !== undefined);
+  document.getElementById('e-m-itwas').textContent = lastWithCount ? lastWithCount.itWasCount : '—';
 }
 
-function saveInterview() {
-  const iv = {
-    id: Date.now(),
-    date: document.getElementById('i-date').value || today(),
-    company: document.getElementById('i-co').value,
-    role: document.getElementById('i-role').value,
-    outcome: document.getElementById('i-outcome').value,
-    scores: {
-      star: parseInt(document.getElementById('i-star').value) || null,
-      fluency: parseInt(document.getElementById('i-flu').value) || null,
-      presence: parseInt(document.getElementById('i-pres').value) || null,
-      tech: parseInt(document.getElementById('i-tech').value) || null,
-      fit: parseInt(document.getElementById('i-fit').value) || null,
-    },
-    transcript: document.getElementById('i-transcript').value,
-    win: document.getElementById('i-win').value,
-    gap: document.getElementById('i-gap').value,
-    feedback: document.getElementById('i-fb').value,
+async function callAI(prompt) {
+  const r = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1200, messages: [{ role: 'user', content: prompt }] })
+  });
+  const d = await r.json();
+  return d.content?.[0]?.text || 'Erro ao processar.';
+}
+
+async function analyzeSession() {
+  const box = document.getElementById('e-ai-box'), body = document.getElementById('e-ai-body'), spin = document.getElementById('e-spin');
+  box.style.display = 'block'; spin.innerHTML = '<span class="spinner"></span> '; body.textContent = 'Analisando...';
+  const transcript = document.getElementById('e-transcript').value;
+  const itWas = transcript ? countResumptiveItWas(transcript) : null;
+  const prompt = `Você é um coach de inglês especializado em eliminar transferência do português (L1) para profissionais B2B brasileiros buscando vagas remotas nos EUA (nível B2, meta C1).
+
+Foco da sessão: ${document.getElementById('e-focus').value}
+Pergunta praticada: ${document.getElementById('e-question').value}
+Confiança autoavaliada: ${document.getElementById('e-conf').value}/10
+Filler words contados: ${document.getElementById('e-fill').value}
+Contagem automática de "it was" resumptivo na transcrição: ${itWas !== null ? itWas : 'sem transcrição'}
+O que funcionou: ${document.getElementById('e-win').value}
+Gap identificado pelo usuário: ${document.getElementById('e-gap').value}
+${transcript ? 'Transcrição:\\n' + transcript.slice(0,2000) : ''}
+
+Responda em português, em 4 partes diretas e curtas:
+1. PADRÃO IDENTIFICADO (1 frase cirúrgica, sem suavizar)
+2. GATE STATUS (se a contagem de "it was" foi 0, confirme que conta para o gate de 3 sessões limpas; se >0, mostre exatamente onde apareceu na transcrição)
+3. EXERCÍCIO PARA AMANHÃ (ação concreta de 5–10 min)
+4. FRASE-ÂNCORA (uma frase em inglês para praticar hoje, relacionada ao gap)`;
+  try { const result = await callAI(prompt); spin.innerHTML = ''; body.textContent = result; }
+  catch(e) { spin.innerHTML = ''; body.textContent = 'Erro na análise. Salve a sessão e traga a transcrição para o chat do Claude.'; }
+}
+
+/* ============================================================
+   SHADOWING MODULE (dentro de Inglês Falado — sem gate, sem IA)
+   ============================================================ */
+async function saveShadowing() {
+  const minutes = parseInt(document.getElementById('sh-minutes').value) || 0;
+  if (minutes <= 0) { alert('Informe os minutos praticados.'); return; }
+  const sh = {
+    id: uid(),
+    date: document.getElementById('sh-date').value || today(),
+    channel: document.getElementById('sh-channel').value,
+    minutes,
+    notes: document.getElementById('sh-notes').value,
   };
-  interviews.unshift(iv);
-  S.set(KI, interviews);
-  renderInterviewHistory();
-  renderInterviewPatterns();
-  updateInterviewMetrics();
-  updateNavBadges();
-  clearFields(['i-co','i-role','i-win','i-gap','i-fb','i-transcript','i-star','i-flu','i-pres','i-tech','i-fit']);
+  shadowingEntries.unshift(sh);
+  await persist('shadowing');
+  renderShadowingHistory(); updateShadowingMetrics();
+  clearFields(['sh-minutes','sh-notes']);
 }
 
-const outcomeLabel = { pending:'Aguardando', advanced:'Avançou', rejected:'Não avançou', offer:'Oferta' };
-const outcomeBadge = { pending:'badge-gray', advanced:'badge-green', rejected:'badge-red', offer:'badge-blue' };
-
-function renderInterviewHistory() {
-  const el = document.getElementById('i-history');
-  if (!interviews.length) { el.innerHTML = '<div class="empty"><i class="ti ti-users"></i>Nenhuma entrevista ainda</div>'; return; }
-  el.innerHTML = interviews.map(iv => `
+function renderShadowingHistory() {
+  const el = document.getElementById('sh-history');
+  if (!shadowingEntries.length) { el.innerHTML = '<div class="empty"><i class="ti ti-headphones"></i>Nenhuma prática registrada ainda</div>'; return; }
+  el.innerHTML = shadowingEntries.slice(0,20).map(sh => `
     <div class="list-item">
-      <div class="list-item-icon" style="background:var(--purple-bg);color:var(--purple);">
-        <i class="ti ti-briefcase"></i>
-      </div>
+      <div class="list-item-icon" style="background:var(--accent-bg);color:var(--accent);"><i class="ti ti-headphones"></i></div>
       <div class="list-item-body">
-        <div class="list-item-title">${iv.company || '—'} — ${iv.role || '—'}</div>
-        <div class="list-item-sub">${iv.date}${iv.gap ? ' · Gap: ' + iv.gap : ''}</div>
+        <div class="list-item-title">${escapeHtml(sh.channel)}</div>
+        <div class="list-item-sub">${sh.date}${sh.notes ? ' · ' + escapeHtml(sh.notes) : ''}</div>
       </div>
       <div class="list-item-meta">
-        <span class="badge ${outcomeBadge[iv.outcome]}">${outcomeLabel[iv.outcome]}</span>
-        <button class="del-btn" onclick="deleteInterview(${iv.id})"><i class="ti ti-trash"></i></button>
+        <span class="badge badge-blue">${sh.minutes} min</span>
+        <button class="del-btn" onclick="deleteShadowing(${sh.id})"><i class="ti ti-trash"></i></button>
       </div>
     </div>`).join('');
 }
 
-function deleteInterview(id) {
-  interviews = interviews.filter(i => i.id !== id);
-  S.set(KI, interviews);
-  renderInterviewHistory();
-  renderInterviewPatterns();
-  updateInterviewMetrics();
-  updateNavBadges();
+async function deleteShadowing(id) {
+  shadowingEntries = shadowingEntries.filter(sh => sh.id !== id);
+  await persist('shadowing');
+  renderShadowingHistory(); updateShadowingMetrics();
 }
 
-function updateInterviewMetrics() {
-  document.getElementById('i-m-total').textContent = interviews.length;
-  const adv = interviews.filter(i => i.outcome === 'advanced' || i.outcome === 'offer').length;
-  document.getElementById('i-m-adv').textContent = adv;
-  document.getElementById('i-m-rate').textContent = interviews.length ? Math.round(adv/interviews.length*100) + '%' : '—';
+function updateShadowingMetrics() {
+  document.getElementById('sh-m-total').textContent = shadowingEntries.length;
+  const totalMin = shadowingEntries.reduce((a,b) => a + (b.minutes||0), 0);
+  document.getElementById('sh-m-minutes').textContent = totalMin;
+  document.getElementById('sh-m-streak').textContent = calcStreak(shadowingEntries.map(sh=>sh.date)) + ' dias';
+  if (shadowingEntries.length) {
+    const freq = {};
+    shadowingEntries.forEach(sh => { freq[sh.channel] = (freq[sh.channel]||0) + 1; });
+    const top = Object.entries(freq).sort((a,b)=>b[1]-a[1])[0];
+    document.getElementById('sh-m-channel').textContent = top ? top[0] : '—';
+  } else {
+    document.getElementById('sh-m-channel').textContent = '—';
+  }
+}
+
+/* ============================================================
+   WRITING MODULE
+   ============================================================ */
+async function saveWriting(kind) {
+  if (kind === 'journal') {
+    const w = { id: uid(), kind: 'journal', date: document.getElementById('w-date').value || today(),
+      text: document.getElementById('w-text').value, topic: document.getElementById('w-topic').value, feedback: null };
+    writingEntries.unshift(w);
+    clearFields(['w-text','w-topic']);
+  } else {
+    const w = { id: uid(), kind: 'prepared', date: document.getElementById('wp-date').value || today(),
+      category: document.getElementById('wp-category').value, question: document.getElementById('wp-question').value,
+      answer: document.getElementById('wp-answer').value, feedback: null };
+    writingEntries.unshift(w);
+    clearFields(['wp-question','wp-answer']);
+  }
+  await persist('writing');
+  renderWritingHistory(); updateWritingMetrics(); updateNavBadges();
+}
+
+function renderWritingHistory() {
+  const journalEl = document.getElementById('w-history-journal');
+  const preparedEl = document.getElementById('w-history-prepared');
+  const journalEntries = writingEntries.filter(w => w.kind === 'journal');
+  const preparedEntries = writingEntries.filter(w => w.kind === 'prepared');
+
+  journalEl.innerHTML = journalEntries.length ? journalEntries.slice(0,15).map(w => `
+    <div class="list-item">
+      <div class="list-item-icon" style="background:var(--teal-bg);color:var(--teal);"><i class="ti ti-notebook"></i></div>
+      <div class="list-item-body">
+        <div class="list-item-title">${escapeHtml(w.topic) || 'Journaling'}</div>
+        <div class="list-item-sub">${w.date} · ${(w.text||'').length} caracteres</div>
+      </div>
+      <div class="list-item-meta"><button class="del-btn" onclick="deleteWriting(${w.id})"><i class="ti ti-trash"></i></button></div>
+    </div>`).join('') : '<div class="empty"><i class="ti ti-notebook"></i>Nenhuma entrada ainda</div>';
+
+  preparedEl.innerHTML = preparedEntries.length ? preparedEntries.slice(0,15).map(w => `
+    <div class="list-item">
+      <div class="list-item-icon" style="background:var(--purple-bg);color:var(--purple);"><i class="ti ti-file-text"></i></div>
+      <div class="list-item-body">
+        <div class="list-item-title">${escapeHtml(w.question) || '(sem pergunta registrada)'}</div>
+        <div class="list-item-sub">${w.date} · ${escapeHtml(w.category)}</div>
+      </div>
+      <div class="list-item-meta"><button class="del-btn" onclick="deleteWriting(${w.id})"><i class="ti ti-trash"></i></button></div>
+    </div>`).join('') : '<div class="empty"><i class="ti ti-file-text"></i>Nenhuma resposta ainda</div>';
+}
+
+async function deleteWriting(id) {
+  writingEntries = writingEntries.filter(w => w.id !== id);
+  await persist('writing');
+  renderWritingHistory(); updateWritingMetrics(); updateNavBadges();
+}
+
+function updateWritingMetrics() {
+  document.getElementById('w-m-total').textContent = writingEntries.length;
+  const journalDates = writingEntries.filter(w=>w.kind==='journal').map(w=>w.date);
+  document.getElementById('w-m-streak').textContent = calcStreak(journalDates) + ' dias';
+  document.getElementById('w-m-clarity').textContent = '—';
+  document.getElementById('w-m-errors').textContent = '—';
+}
+
+async function analyzeWriting(kind) {
+  const box = document.getElementById('w-ai-box-' + kind), body = document.getElementById('w-ai-body-' + kind), spin = document.getElementById('w-spin-' + kind);
+  box.style.display = 'block'; spin.innerHTML = '<span class="spinner"></span> '; body.textContent = 'Analisando...';
+  let prompt;
+  if (kind === 'journal') {
+    const text = document.getElementById('w-text').value;
+    prompt = `Você é um editor de inglês escrito para um profissional de marketing brasileiro (B2, meta C1) que mantém journaling diário em inglês como prática.
+
+Tema do dia: ${document.getElementById('w-topic').value}
+Texto:
+${text.slice(0,2500)}
+
+Responda em português, em 3 partes:
+1. PADRÃO DE ERRO RECORRENTE (gramática ou estrutura — seja específico, cite a frase exata)
+2. VERSÃO CORRIGIDA (reescreva o texto em inglês natural, mantendo a voz e as ideias do autor — não floreie)
+3. UMA REGRA PARA LEMBRAR (a regra gramatical/estrutural por trás do erro mais recorrente, em 1-2 frases)`;
+  } else {
+    const q = document.getElementById('wp-question').value, a = document.getElementById('wp-answer').value;
+    prompt = `Você é um coach de entrevistas em inglês para Demand Generation/Growth Marketing sênior, avaliando respostas escritas preparadas de um candidato brasileiro (B2, meta C1) buscando vagas remotas nos EUA.
+
+Categoria: ${document.getElementById('wp-category').value}
+Pergunta: ${q}
+Resposta do candidato:
+${a.slice(0,2500)}
+
+Responda em português, em 4 partes:
+1. CONTEÚDO (a resposta tem estrutura clara, métrica concreta, e evita diluição/"we"-erasure quando deveria liderar com "I"? Seja direto)
+2. INGLÊS (erros de gramática, escolha de palavras, ou construções que soam traduzidas do português)
+3. VERSÃO MELHORADA (reescreva mantendo a voz e os fatos do candidato, sem inventar dados)
+4. SCORE RÁPIDO (1-5 para conteúdo, 1-5 para inglês)`;
+  }
+  try { const result = await callAI(prompt); spin.innerHTML = ''; body.textContent = result; }
+  catch(e) { spin.innerHTML = ''; body.textContent = 'Erro na análise. Salve a entrada e traga o texto para o chat.'; }
+}
+
+/* ============================================================
+   MOCK INTERVIEWS MODULE
+   ============================================================ */
+async function saveMock() {
+  const m = {
+    id: uid(), date: document.getElementById('m-date').value || today(),
+    persona: document.getElementById('m-persona').value,
+    scores: {
+      star: parseInt(document.getElementById('m-star').value) || null,
+      fluency: parseInt(document.getElementById('m-flu').value) || null,
+      presence: parseInt(document.getElementById('m-pres').value) || null,
+      tech: parseInt(document.getElementById('m-tech').value) || null,
+      fit: parseInt(document.getElementById('m-fit').value) || null,
+    },
+    transcript: document.getElementById('m-transcript').value,
+    win: document.getElementById('m-win').value,
+    gap: document.getElementById('m-gap').value,
+  };
+  mocks.unshift(m);
+  await persist('mocks');
+  renderMockHistory(); renderMockPatterns(); updateMockMetrics(); updateNavBadges();
+  clearFields(['m-persona','m-win','m-gap','m-transcript','m-star','m-flu','m-pres','m-tech','m-fit']);
+}
+
+function renderMockHistory() {
+  const el = document.getElementById('m-history');
+  if (!mocks.length) { el.innerHTML = '<div class="empty"><i class="ti ti-users-group"></i>Nenhum mock ainda</div>'; return; }
+  el.innerHTML = mocks.map(m => `
+    <div class="list-item">
+      <div class="list-item-icon" style="background:var(--purple-bg);color:var(--purple);"><i class="ti ti-users-group"></i></div>
+      <div class="list-item-body">
+        <div class="list-item-title">${escapeHtml(m.persona) || '—'}</div>
+        <div class="list-item-sub">${m.date}${m.gap ? ' · Gap: ' + escapeHtml(m.gap) : ''}</div>
+      </div>
+      <div class="list-item-meta"><button class="del-btn" onclick="deleteMock(${m.id})"><i class="ti ti-trash"></i></button></div>
+    </div>`).join('');
+}
+
+async function deleteMock(id) {
+  mocks = mocks.filter(m => m.id !== id);
+  await persist('mocks');
+  renderMockHistory(); renderMockPatterns(); updateMockMetrics(); updateNavBadges();
+}
+
+function updateMockMetrics() {
+  document.getElementById('m-m-total').textContent = mocks.length;
   const dims = ['star','fluency','presence','tech','fit'];
-  const allScores = interviews.flatMap(iv => dims.map(d => iv.scores[d]).filter(Boolean));
-  document.getElementById('i-m-score').textContent = allScores.length ? (allScores.reduce((a,b)=>a+b,0)/allScores.length).toFixed(1)+'/5' : '—';
+  const allScores = mocks.flatMap(m => dims.map(d => m.scores[d]).filter(Boolean));
+  document.getElementById('m-m-score').textContent = allScores.length ? (allScores.reduce((a,b)=>a+b,0)/allScores.length).toFixed(1)+'/5' : '—';
+  if (mocks.length >= 2) {
+    const recent = mocks.slice(0,3), older = mocks.slice(3,6);
+    const avgOf = (arr) => { const v = arr.flatMap(m => dims.map(d=>m.scores[d]).filter(Boolean)); return v.length ? v.reduce((a,b)=>a+b,0)/v.length : null; };
+    const ra = avgOf(recent), oa = avgOf(older);
+    if (ra !== null && oa !== null) {
+      document.getElementById('m-m-trend').innerHTML = ra > oa ? '<span style="color:var(--green)">↑ melhorando</span>' : ra < oa ? '<span style="color:var(--red)">↓ piorando</span>' : '— estável';
+    } else { document.getElementById('m-m-trend').textContent = '—'; }
+  }
 }
 
-function renderInterviewPatterns() {
-  const el = document.getElementById('i-patterns');
-  if (interviews.length < 2) { el.innerHTML = '<div class="empty"><i class="ti ti-chart-radar"></i>Registre ao menos 2 entrevistas</div>'; return; }
+function renderMockPatterns() {
+  const el = document.getElementById('m-patterns');
+  if (mocks.length < 2) { el.innerHTML = '<div class="empty"><i class="ti ti-chart-radar"></i>Registre ao menos 2 mocks</div>'; document.getElementById('m-m-gap').textContent = '—'; return; }
   const dims = ['star','fluency','presence','tech','fit'];
   const labels = { star:'STAR / estrutura', fluency:'Fluência em inglês', presence:'Confiança / presença', tech:'Conhecimento técnico', fit:'Fit cultural' };
   const avgs = {};
-  dims.forEach(d => {
-    const vals = interviews.map(i => i.scores[d]).filter(Boolean);
-    avgs[d] = vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : null;
-  });
+  dims.forEach(d => { const vals = mocks.map(m => m.scores[d]).filter(Boolean); avgs[d] = vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : null; });
   const sorted = dims.filter(d => avgs[d]).sort((a,b) => avgs[a]-avgs[b]);
   const getColor = v => v < 2.5 ? '#DC2626' : v < 3.5 ? '#D97706' : '#16A34A';
   el.innerHTML = sorted.map(d => `
@@ -851,25 +1177,185 @@ function renderInterviewPatterns() {
       <div class="prog-track"><div class="prog-fill" style="width:${Math.round(avgs[d]/5*100)}%;background:${getColor(avgs[d])}"></div></div>
       <span class="prog-val" style="color:${getColor(avgs[d])}">${avgs[d].toFixed(1)}</span>
     </div>`).join('') +
-    (sorted[0] ? `<div class="insight">Maior gap: <strong>${labels[sorted[0]]}</strong> (${avgs[sorted[0]].toFixed(1)}/5) — priorize isso na próxima sessão de prática.</div>` : '');
+    (sorted[0] ? `<div class="insight">Maior gap: <strong>${labels[sorted[0]]}</strong> (${avgs[sorted[0]].toFixed(1)}/5) — priorize isso na próxima sessão.</div>` : '');
+  if (sorted[0]) document.getElementById('m-m-gap').textContent = labels[sorted[0]];
 }
 
-function saveJob() {
+async function analyzeMock() {
+  const box = document.getElementById('m-ai-box'), body = document.getElementById('m-ai-body'), spin = document.getElementById('m-spin');
+  box.style.display = 'block'; spin.innerHTML = '<span class="spinner"></span> '; body.textContent = 'Diagnosticando...';
+  const prompt = `Você é um coach de carreira para profissionais de marketing LATAM buscando vagas remotas nos EUA (Head of Demand Gen / Senior Growth Marketing Manager). Seja direto e cirúrgico, sem suavizar.
+
+Esta é uma simulação de treino (mock interview), não uma entrevista real.
+Persona simulada: ${document.getElementById('m-persona').value}
+STAR: ${document.getElementById('m-star').value}/5 | Fluência: ${document.getElementById('m-flu').value}/5 | Presença: ${document.getElementById('m-pres').value}/5 | Técnico: ${document.getElementById('m-tech').value}/5 | Fit: ${document.getElementById('m-fit').value}/5
+Funcionou: ${document.getElementById('m-win').value}
+Gap: ${document.getElementById('m-gap').value}
+${document.getElementById('m-transcript').value ? 'Transcrição:\\n' + document.getElementById('m-transcript').value.slice(0,2000) : ''}
+
+Responda em português em 3 partes:
+1. DIAGNÓSTICO REAL (o que travaria numa entrevista de verdade — sem filtro)
+2. MUDANÇA PRIORITÁRIA (uma coisa concreta para o próximo mock)
+3. SCRIPT (reescreva em inglês a parte mais fraca, do jeito que deveria ser dita)`;
+  try { const result = await callAI(prompt); spin.innerHTML = ''; body.textContent = result; }
+  catch(e) { spin.innerHTML = ''; body.textContent = 'Erro na análise. Salve o mock e traga os dados para o chat.'; }
+}
+
+/* ============================================================
+   REAL INTERVIEWS MODULE
+   ============================================================ */
+const outcomeLabel = { pending:'Aguardando', advanced:'Avançou', rejected:'Não avançou', offer:'Oferta' };
+const outcomeBadge = { pending:'badge-gray', advanced:'badge-green', rejected:'badge-red', offer:'badge-blue' };
+
+async function saveReal() {
+  const r = {
+    id: uid(), date: document.getElementById('r-date').value || today(),
+    company: document.getElementById('r-co').value, role: document.getElementById('r-role').value,
+    stage: document.getElementById('r-stage').value, outcome: document.getElementById('r-outcome').value,
+    pipelineLink: document.getElementById('r-pipeline-link').value || null,
+    scores: {
+      star: parseInt(document.getElementById('r-star').value) || null,
+      fluency: parseInt(document.getElementById('r-flu').value) || null,
+      presence: parseInt(document.getElementById('r-pres').value) || null,
+      tech: parseInt(document.getElementById('r-tech').value) || null,
+      fit: parseInt(document.getElementById('r-fit').value) || null,
+    },
+    transcript: document.getElementById('r-transcript').value,
+    win: document.getElementById('r-win').value, gap: document.getElementById('r-gap').value,
+    feedback: document.getElementById('r-fb').value,
+  };
+  realInterviews.unshift(r);
+  await persist('real');
+  // Se vinculada a uma vaga do pipeline, atualiza status automaticamente
+  if (r.pipelineLink) {
+    const job = jobs.find(j => String(j.id) === String(r.pipelineLink));
+    if (job) {
+      if (r.outcome === 'offer') job.status = 'offer';
+      else if (r.outcome === 'advanced') job.status = 'interview';
+      else if (r.outcome === 'rejected') job.status = 'rejected';
+      await persist('jobs');
+      renderJobList(); updatePipelineMetrics(); renderCvConversion(); renderChannelConversion();
+    }
+  }
+  renderRealHistory(); renderRealPatterns(); updateRealMetrics(); updateNavBadges();
+  clearFields(['r-co','r-role','r-win','r-gap','r-fb','r-transcript','r-star','r-flu','r-pres','r-tech','r-fit']);
+}
+
+function renderRealHistory() {
+  const el = document.getElementById('r-history');
+  if (!realInterviews.length) { el.innerHTML = '<div class="empty"><i class="ti ti-briefcase"></i>Nenhuma entrevista ainda</div>'; return; }
+  el.innerHTML = realInterviews.map(r => `
+    <div class="list-item">
+      <div class="list-item-icon" style="background:var(--accent-bg);color:var(--accent);"><i class="ti ti-briefcase"></i></div>
+      <div class="list-item-body">
+        <div class="list-item-title">${escapeHtml(r.company) || '—'} — ${escapeHtml(r.role) || '—'}</div>
+        <div class="list-item-sub">${r.date} · ${escapeHtml(r.stage)}${r.gap ? ' · Gap: ' + escapeHtml(r.gap) : ''}</div>
+      </div>
+      <div class="list-item-meta">
+        <span class="badge ${outcomeBadge[r.outcome]}">${outcomeLabel[r.outcome]}</span>
+        <button class="del-btn" onclick="deleteReal(${r.id})"><i class="ti ti-trash"></i></button>
+      </div>
+    </div>`).join('');
+}
+
+async function deleteReal(id) {
+  realInterviews = realInterviews.filter(r => r.id !== id);
+  await persist('real');
+  renderRealHistory(); renderRealPatterns(); updateRealMetrics(); updateNavBadges();
+}
+
+function updateRealMetrics() {
+  document.getElementById('r-m-total').textContent = realInterviews.length;
+  const adv = realInterviews.filter(r => r.outcome === 'advanced' || r.outcome === 'offer').length;
+  document.getElementById('r-m-adv').textContent = adv;
+  document.getElementById('r-m-rate').textContent = realInterviews.length ? Math.round(adv/realInterviews.length*100) + '%' : '—';
+  document.getElementById('r-m-offers').textContent = realInterviews.filter(r=>r.outcome==='offer').length;
+}
+
+function renderRealPatterns() {
+  const el = document.getElementById('r-patterns');
+  if (realInterviews.length < 2) { el.innerHTML = '<div class="empty"><i class="ti ti-chart-radar"></i>Registre ao menos 2 entrevistas</div>'; return; }
+  const dims = ['star','fluency','presence','tech','fit'];
+  const labels = { star:'STAR / estrutura', fluency:'Fluência em inglês', presence:'Confiança / presença', tech:'Conhecimento técnico', fit:'Fit cultural' };
+  const avgs = {};
+  dims.forEach(d => { const vals = realInterviews.map(r => r.scores[d]).filter(Boolean); avgs[d] = vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : null; });
+  const sorted = dims.filter(d => avgs[d]).sort((a,b) => avgs[a]-avgs[b]);
+  const getColor = v => v < 2.5 ? '#DC2626' : v < 3.5 ? '#D97706' : '#16A34A';
+  el.innerHTML = sorted.map(d => `
+    <div class="prog-row">
+      <span class="prog-label">${labels[d]}</span>
+      <div class="prog-track"><div class="prog-fill" style="width:${Math.round(avgs[d]/5*100)}%;background:${getColor(avgs[d])}"></div></div>
+      <span class="prog-val" style="color:${getColor(avgs[d])}">${avgs[d].toFixed(1)}</span>
+    </div>`).join('') +
+    (sorted[0] ? `<div class="insight">Maior gap: <strong>${labels[sorted[0]]}</strong> (${avgs[sorted[0]].toFixed(1)}/5) — compare com seus mocks para ver se é gap de prática ou gap de pressão real.</div>` : '');
+}
+
+async function analyzeReal() {
+  const box = document.getElementById('r-ai-box'), body = document.getElementById('r-ai-body'), spin = document.getElementById('r-spin');
+  box.style.display = 'block'; spin.innerHTML = '<span class="spinner"></span> '; body.textContent = 'Diagnosticando...';
+  const prompt = `Você é um coach de carreira para profissionais de marketing LATAM buscando vagas remotas nos EUA (Head of Demand Gen / Senior Growth Marketing Manager). Seja direto e cirúrgico, sem suavizar — esta é uma entrevista REAL, não treino.
+
+Empresa: ${document.getElementById('r-co').value} | Vaga: ${document.getElementById('r-role').value} | Etapa: ${document.getElementById('r-stage').value}
+Resultado: ${document.getElementById('r-outcome').value}
+STAR: ${document.getElementById('r-star').value}/5 | Fluência: ${document.getElementById('r-flu').value}/5 | Presença: ${document.getElementById('r-pres').value}/5 | Técnico: ${document.getElementById('r-tech').value}/5 | Fit: ${document.getElementById('r-fit').value}/5
+Funcionou: ${document.getElementById('r-win').value}
+Gap: ${document.getElementById('r-gap').value}
+Feedback da empresa: ${document.getElementById('r-fb').value}
+${document.getElementById('r-transcript').value ? 'Transcrição:\\n' + document.getElementById('r-transcript').value.slice(0,1800) : ''}
+
+Responda em português em 3 partes:
+1. DIAGNÓSTICO REAL (por que não avançou — honesto, sem filtro; distinga problema de posicionamento vs. problema de execução na entrevista)
+2. MUDANÇA PRIORITÁRIA (uma coisa concreta para a próxima entrevista real)
+3. SCRIPT (reescreva em inglês a parte mais fraca, do jeito que deveria ser dita)`;
+  try { const result = await callAI(prompt); spin.innerHTML = ''; body.textContent = result; }
+  catch(e) { spin.innerHTML = ''; body.textContent = 'Erro na análise. Salve a entrevista e traga os dados para o chat.'; }
+}
+
+/* ============================================================
+   PIPELINE + CV VERSIONS MODULE
+   ============================================================ */
+async function addCvVersion() {
+  const name = document.getElementById('cv-name').value.trim();
+  if (!name) return;
+  cvVersions.unshift({ id: uid(), name, link: document.getElementById('cv-link').value.trim() });
+  await persist('cvs');
+  clearFields(['cv-name','cv-link']);
+  renderCvList(); refreshPipelineSelects(); renderCvConversion();
+}
+
+function renderCvList() {
+  const el = document.getElementById('cv-list');
+  if (!cvVersions.length) { el.innerHTML = '<div class="empty" style="padding:16px;"><i class="ti ti-files"></i>Nenhuma versão cadastrada</div>'; return; }
+  el.innerHTML = cvVersions.map(cv => `
+    <div class="list-item">
+      <div class="list-item-icon" style="background:var(--purple-bg);color:var(--purple);"><i class="ti ti-file-cv"></i></div>
+      <div class="list-item-body">
+        <div class="list-item-title">${escapeHtml(cv.name)}</div>
+        ${cv.link ? `<div class="link-row"><i class="ti ti-link"></i><a href="${escapeHtml(cv.link)}" target="_blank" rel="noopener">${escapeHtml(cv.link)}</a></div>` : ''}
+      </div>
+      <div class="list-item-meta"><button class="del-btn" onclick="deleteCvVersion(${cv.id})"><i class="ti ti-trash"></i></button></div>
+    </div>`).join('');
+}
+
+async function deleteCvVersion(id) {
+  cvVersions = cvVersions.filter(cv => cv.id !== id);
+  await persist('cvs');
+  renderCvList(); refreshPipelineSelects(); renderCvConversion();
+}
+
+async function saveJob() {
   const j = {
-    id: Date.now(),
-    date: document.getElementById('p-date').value || today(),
-    company: document.getElementById('p-co').value,
-    role: document.getElementById('p-role').value,
-    channel: document.getElementById('p-channel').value,
-    status: document.getElementById('p-status').value,
+    id: uid(), date: document.getElementById('p-date').value || today(),
+    company: document.getElementById('p-co').value, role: document.getElementById('p-role').value,
+    channel: document.getElementById('p-channel').value, status: document.getElementById('p-status').value,
+    cvId: document.getElementById('p-cv').value || null,
+    jobLink: document.getElementById('p-joblink').value.trim(),
     notes: document.getElementById('p-notes').value,
   };
   jobs.unshift(j);
-  S.set(KJ, jobs);
-  renderJobList();
-  updatePipelineMetrics();
-  updateNavBadges();
-  clearFields(['p-co','p-role','p-notes']);
+  await persist('jobs');
+  renderJobList(); updatePipelineMetrics(); updateNavBadges(); renderCvConversion(); renderChannelConversion(); refreshPipelineSelects();
+  clearFields(['p-co','p-role','p-notes','p-joblink']);
 }
 
 const statusLabel = { applied:'Aplicado', screening:'Screening', interview:'Entrevista', offer:'Oferta', rejected:'Não avançou' };
@@ -878,28 +1364,30 @@ const statusBadge = { applied:'badge-gray', screening:'badge-blue', interview:'b
 function renderJobList() {
   const el = document.getElementById('p-list');
   if (!jobs.length) { el.innerHTML = '<div class="empty"><i class="ti ti-send"></i>Nenhuma vaga adicionada</div>'; return; }
-  el.innerHTML = jobs.map(j => `
+  el.innerHTML = jobs.map(j => {
+    const cv = cvVersions.find(c => String(c.id) === String(j.cvId));
+    return `
     <div class="list-item">
-      <div class="list-item-icon" style="background:var(--green-bg);color:var(--green);">
-        <i class="ti ti-building"></i>
-      </div>
+      <div class="list-item-icon" style="background:var(--green-bg);color:var(--green);"><i class="ti ti-building"></i></div>
       <div class="list-item-body">
-        <div class="list-item-title">${j.company || '—'} — ${j.role || '—'}</div>
-        <div class="list-item-sub">${j.channel} · ${j.date}${j.notes ? ' · ' + j.notes : ''}</div>
+        <div class="list-item-title">${escapeHtml(j.company) || '—'} — ${escapeHtml(j.role) || '—'}</div>
+        <div class="list-item-sub">${escapeHtml(j.channel)} · ${j.date}${j.notes ? ' · ' + escapeHtml(j.notes) : ''}</div>
+        <div style="margin-top:4px; display:flex; gap:6px; flex-wrap:wrap;">
+          ${cv ? `<span class="cv-pill"><i class="ti ti-file-cv"></i>${escapeHtml(cv.name)}</span>` : ''}
+          ${j.jobLink ? `<span class="link-row"><i class="ti ti-link"></i><a href="${escapeHtml(j.jobLink)}" target="_blank" rel="noopener">link da vaga</a></span>` : ''}
+        </div>
       </div>
       <div class="list-item-meta">
         <span class="badge ${statusBadge[j.status]}">${statusLabel[j.status]}</span>
         <button class="del-btn" onclick="deleteJob(${j.id})"><i class="ti ti-trash"></i></button>
       </div>
-    </div>`).join('');
+    </div>`; }).join('');
 }
 
-function deleteJob(id) {
+async function deleteJob(id) {
   jobs = jobs.filter(j => j.id !== id);
-  S.set(KJ, jobs);
-  renderJobList();
-  updatePipelineMetrics();
-  updateNavBadges();
+  await persist('jobs');
+  renderJobList(); updatePipelineMetrics(); updateNavBadges(); renderCvConversion(); renderChannelConversion();
 }
 
 function updatePipelineMetrics() {
@@ -911,23 +1399,98 @@ function updatePipelineMetrics() {
   document.getElementById('p-m-conv').textContent = jobs.length ? Math.round(offers/jobs.length*100)+'%' : '—';
 }
 
+function conversionScore(jobsSubset) {
+  // pontua avanço: applied=0, screening=1, interview=2, offer=3, rejected=-1 (não soma)
+  const weight = { applied: 0, screening: 1, interview: 2, offer: 3, rejected: 0 };
+  const advanced = jobsSubset.filter(j => j.status !== 'applied' && j.status !== 'rejected').length;
+  return jobsSubset.length ? Math.round(advanced / jobsSubset.length * 100) : 0;
+}
+
+function renderCvConversion() {
+  const el = document.getElementById('p-cv-conversion');
+  const withCv = jobs.filter(j => j.cvId);
+  if (!cvVersions.length || !withCv.length) { el.innerHTML = '<div class="empty"><i class="ti ti-file-analytics"></i>Cadastre versões e vincule a vagas para ver conversão</div>'; return; }
+  const rows = cvVersions.map(cv => {
+    const subset = jobs.filter(j => String(j.cvId) === String(cv.id));
+    if (!subset.length) return null;
+    const rate = conversionScore(subset);
+    const offers = subset.filter(j=>j.status==='offer').length;
+    return { name: cv.name, n: subset.length, rate, offers };
+  }).filter(Boolean).sort((a,b) => b.rate - a.rate);
+  const getColor = v => v >= 50 ? '#16A34A' : v >= 25 ? '#D97706' : '#DC2626';
+  el.innerHTML = rows.map(r => `
+    <div class="prog-row">
+      <span class="prog-label">${escapeHtml(r.name)} (${r.n})</span>
+      <div class="prog-track"><div class="prog-fill" style="width:${r.rate}%;background:${getColor(r.rate)}"></div></div>
+      <span class="prog-val" style="color:${getColor(r.rate)}">${r.rate}%</span>
+    </div>`).join('') + (rows.length >= 2 ? `<div class="insight">${escapeHtml(rows[0].name)} converte melhor (${rows[0].rate}% avançam de status) — considere priorizar essa versão nas próximas aplicações.</div>` : '');
+}
+
+function renderChannelConversion() {
+  const el = document.getElementById('p-channel-conversion');
+  if (!jobs.length) { el.innerHTML = '<div class="empty"><i class="ti ti-route"></i>Sem dados ainda</div>'; return; }
+  const channels = [...new Set(jobs.map(j => j.channel))];
+  const rows = channels.map(ch => {
+    const subset = jobs.filter(j => j.channel === ch);
+    return { name: ch, n: subset.length, rate: conversionScore(subset) };
+  }).sort((a,b) => b.rate - a.rate);
+  const getColor = v => v >= 50 ? '#16A34A' : v >= 25 ? '#D97706' : '#DC2626';
+  el.innerHTML = rows.map(r => `
+    <div class="prog-row">
+      <span class="prog-label">${escapeHtml(r.name)} (${r.n})</span>
+      <div class="prog-track"><div class="prog-fill" style="width:${r.rate}%;background:${getColor(r.rate)}"></div></div>
+      <span class="prog-val" style="color:${getColor(r.rate)}">${r.rate}%</span>
+    </div>`).join('');
+}
+
+function refreshPipelineSelects() {
+  const cvSel = document.getElementById('p-cv');
+  if (cvSel) {
+    const current = cvSel.value;
+    cvSel.innerHTML = '<option value="">— não especificado —</option>' + cvVersions.map(cv => `<option value="${cv.id}">${escapeHtml(cv.name)}</option>`).join('');
+    cvSel.value = current;
+  }
+  const linkSel = document.getElementById('r-pipeline-link');
+  if (linkSel) {
+    const current = linkSel.value;
+    const openJobs = jobs.filter(j => j.status !== 'rejected');
+    linkSel.innerHTML = '<option value="">— nenhuma —</option>' + openJobs.map(j => `<option value="${j.id}">${escapeHtml(j.company)} — ${escapeHtml(j.role)}</option>`).join('');
+    linkSel.value = current;
+  }
+}
+
+/* ============================================================
+   NAV BADGES
+   ============================================================ */
 function updateNavBadges() {
   document.getElementById('nav-sessions').textContent = sessions.length;
-  document.getElementById('nav-interviews').textContent = interviews.length;
+  document.getElementById('nav-writing').textContent = writingEntries.length;
+  document.getElementById('nav-mocks').textContent = mocks.length;
+  document.getElementById('nav-real').textContent = realInterviews.length;
   document.getElementById('nav-pipeline').textContent = jobs.length;
 }
 
+/* ============================================================
+   DASHBOARD + CROSS-MODULE INTELLIGENCE
+   ============================================================ */
 function renderDashboard() {
+  renderGateBanner('gate-banner-dash','gate-banner-dots','gate-banner-text');
+
   document.getElementById('d-sessions').textContent = sessions.length;
-  document.getElementById('d-streak').textContent = 'Streak: ' + calcStreak() + ' dias';
-  const adv = interviews.filter(i => i.outcome === 'advanced' || i.outcome === 'offer').length;
-  document.getElementById('d-interviews').textContent = interviews.length;
-  document.getElementById('d-rate').textContent = 'Taxa de avanço: ' + (interviews.length ? Math.round(adv/interviews.length*100)+'%' : '—');
+  document.getElementById('d-streak').textContent = 'Streak: ' + calcStreak(sessions.map(s=>s.date)) + ' dias';
+
+  document.getElementById('d-writing').textContent = writingEntries.length;
+  document.getElementById('d-writing-streak').textContent = 'Streak: ' + calcStreak(writingEntries.filter(w=>w.kind==='journal').map(w=>w.date)) + ' dias';
+
+  document.getElementById('d-mocks').textContent = mocks.length;
+  const dims = ['star','fluency','presence','tech','fit'];
+  const mockScores = mocks.flatMap(m => dims.map(d=>m.scores[d]).filter(Boolean));
+  document.getElementById('d-mocks-score').textContent = 'Score médio: ' + (mockScores.length ? (mockScores.reduce((a,b)=>a+b,0)/mockScores.length).toFixed(1)+'/5' : '—');
+
   document.getElementById('d-pipeline').textContent = jobs.length;
   document.getElementById('d-offers').textContent = 'Ofertas: ' + jobs.filter(j=>j.status==='offer').length;
-  const withConf = sessions.filter(s=>s.confidence);
-  document.getElementById('d-confidence').textContent = withConf.length ? (withConf.reduce((a,b)=>a+b.confidence,0)/withConf.length).toFixed(1)+'/10' : '—';
 
+  // chart
   const chartEl = document.getElementById('d-chart-area');
   if (sessions.length < 2) {
     chartEl.innerHTML = '<div class="empty"><i class="ti ti-chart-line"></i>Registre sessões para ver evolução</div>';
@@ -941,34 +1504,109 @@ function renderDashboard() {
     }).join('')}</div>`;
   }
 
-  const allGaps = [...sessions.map(s=>s.gap), ...interviews.map(i=>i.gap)].filter(Boolean);
+  // gaps cross-module
+  const allGaps = [...sessions.map(s=>s.gap), ...mocks.map(m=>m.gap), ...realInterviews.map(r=>r.gap)].filter(Boolean);
   const gapsEl = document.getElementById('d-gaps');
   if (!allGaps.length) {
     gapsEl.innerHTML = '<div class="empty"><i class="ti ti-alert-circle"></i>Sem dados ainda</div>';
   } else {
     const freq = {};
-    ['filler','star','estrutura','confiança','fluência','vocabulário','why this company','presença','ritmo','pronúncia'].forEach(k => {
-      allGaps.forEach(g => { if(g.toLowerCase().includes(k)) freq[k]=(freq[k]||0)+1; });
+    ['filler','star','estrutura','it was','confiança','fluência','vocabulário','why this company','presença','ritmo','pronúncia','we','i'].forEach(k => {
+      allGaps.forEach(g => { if (g.toLowerCase().includes(k)) freq[k] = (freq[k]||0)+1; });
     });
     const sorted = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,5);
-    gapsEl.innerHTML = sorted.length ? sorted.map(([k,v]) =>
-      `<div class="prog-row">
+    gapsEl.innerHTML = sorted.length ? sorted.map(([k,v]) => `
+      <div class="prog-row">
         <span class="prog-label">${k}</span>
         <div class="prog-track"><div class="prog-fill" style="width:${Math.round(v/allGaps.length*100)}%;background:#1A56DB;"></div></div>
         <span class="prog-val" style="color:var(--text-2)">${v}x</span>
-      </div>`).join('') :
-      '<div style="font-size:12px;color:var(--text-3)">Sem padrões claros ainda</div>';
+      </div>`).join('') : '<div style="font-size:12px;color:var(--text-3)">Sem padrões claros ainda</div>';
   }
 
+  renderCrossInsights();
+  renderNextActions();
+  renderSidebarGate();
+}
+
+function renderCrossInsights() {
+  const el = document.getElementById('d-cross-insights');
+  const insights = [];
+
+  // 1. Drill confidence vs mock performance under pressure
+  const recentSessionsConf = sessions.slice(0,3).filter(s=>s.confidence).map(s=>s.confidence);
+  const recentMockScores = mocks.slice(0,3).flatMap(m => ['star','fluency','presence','tech','fit'].map(d=>m.scores[d]).filter(Boolean));
+  if (recentSessionsConf.length >= 2 && recentMockScores.length >= 2) {
+    const avgConf = recentSessionsConf.reduce((a,b)=>a+b,0)/recentSessionsConf.length; // /10
+    const avgMock = recentMockScores.reduce((a,b)=>a+b,0)/recentMockScores.length; // /5
+    const normMock = avgMock * 2; // normalize to /10
+    if (avgConf - normMock >= 2.5) {
+      insights.push({ type: 'warn', text: `Confiança média nas últimas sessões de drill foi <strong>${avgConf.toFixed(1)}/10</strong>, mas o score médio dos últimos mocks equivale a <strong>${normMock.toFixed(1)}/10</strong>. Isso é o gap clássico entre prática isolada e performance sob pressão — sinal de que o "prepared vs. improvised gap" ainda está ativo.` });
+    }
+  }
+
+  // 2. "it was" gate vs real interview outcomes
+  const g = getGateStatus();
+  const recentRealRejected = realInterviews.slice(0,3).filter(r => r.outcome === 'rejected');
+  if (!g.isOpen && recentRealRejected.length >= 1) {
+    insights.push({ type: 'danger', text: `O gate de "it was" resumptivo ainda está em <strong>${g.consecutiveClean}/3</strong> e você teve rejeição(ões) recente(s) em entrevista real. Antes de aplicar para mais vagas no mesmo nível de senioridade, vale fechar o gate — esse padrão de transferência do português é o tipo de coisa que sinaliza não-nativo de forma mais perceptível que vocabulário.` });
+  }
+
+  // 3. CV version conversion divergence
+  const withCv = jobs.filter(j => j.cvId);
+  if (cvVersions.length >= 2 && withCv.length >= 4) {
+    const rates = cvVersions.map(cv => {
+      const subset = jobs.filter(j => String(j.cvId) === String(cv.id));
+      return subset.length ? { name: cv.name, rate: conversionScore(subset), n: subset.length } : null;
+    }).filter(Boolean);
+    if (rates.length >= 2) {
+      const best = rates.reduce((a,b) => a.rate > b.rate ? a : b);
+      const worst = rates.reduce((a,b) => a.rate < b.rate ? a : b);
+      if (best.rate - worst.rate >= 30) {
+        insights.push({ type: 'good', text: `<strong>${escapeHtml(best.name)}</strong> converte ${best.rate}% vs <strong>${escapeHtml(worst.name)}</strong> em ${worst.rate}% (n=${best.n} vs ${worst.n}). Diferença grande o suficiente para vale a pena revisar o que mudou entre as duas versões e aplicar isso de volta na versão mais fraca, ou simplesmente descontinuá-la.` });
+      }
+    }
+  }
+
+  // 4. Writing streak vs spoken streak divergence
+  const speakStreak = calcStreak(sessions.map(s=>s.date));
+  const writeStreak = calcStreak(writingEntries.filter(w=>w.kind==='journal').map(w=>w.date));
+  if (writingEntries.length >= 5 && speakStreak === 0 && writeStreak >= 3) {
+    insights.push({ type: 'warn', text: `Streak de journaling escrito em <strong>${writeStreak} dias</strong>, mas streak de drill falado em <strong>0</strong>. Escrita sem fala não fecha o gap de fluência conversacional — considere puxar uma sessão de fala ainda hoje.` });
+  }
+
+  // 5. Real interview feedback mentioning accent/fluency
+  const accentFeedback = realInterviews.filter(r => r.feedback && /accent|fluen|english|pronunci/i.test(r.feedback));
+  if (accentFeedback.length >= 1) {
+    insights.push({ type: 'danger', text: `Você já recebeu feedback de empresa(s) real(is) mencionando inglês/pronúncia diretamente. Isso eleva a prioridade do módulo de Inglês Falado de "melhoria geral" para "bloqueador de conversão" — trate como tal nas próximas semanas.` });
+  }
+
+  // 6. Shadowing (passive) volume vs drill (active output) volume
+  const shadowMinutesRecent = shadowingEntries.slice(0,7).reduce((a,b) => a + (b.minutes||0), 0);
+  const drillSessionsRecent = sessions.slice(0,7).length;
+  if (shadowMinutesRecent >= 60 && drillSessionsRecent === 0) {
+    insights.push({ type: 'warn', text: `${shadowMinutesRecent} minutos de shadowing nos registros recentes, mas nenhuma sessão de drill no mesmo período. Shadowing treina input (ritmo, entonação, oralidade nativa) — sem drill, você não está testando se isso virou output sob pressão. Os dois precisam coexistir.` });
+  }
+
+  el.innerHTML = insights.length ? insights.map(i => `<div class="insight ${i.type}">${i.text}</div>`).join('') : '<div class="empty"><i class="ti ti-chart-dots"></i>Registre dados em pelo menos 2 módulos para ver correlações</div>';
+}
+
+function renderNextActions() {
   const actEl = document.getElementById('d-actions');
   const actions = [];
-  if (!sessions.length) actions.push({ text: 'Registrar primeira sessão de inglês', sub: 'Google Meet + Otter.ai → cole a transcrição', badge: 'badge-blue', bText: 'Hoje' });
-  if (!interviews.length) actions.push({ text: 'Registrar as 6 entrevistas anteriores', sub: 'Mesmo sem transcrição, os scores já geram diagnóstico', badge: 'badge-amber', bText: 'Esta semana' });
-  if (!jobs.length) actions.push({ text: 'Adicionar vagas ativas no pipeline', sub: 'Brite + Remote Leverage + diretas', badge: 'badge-gray', bText: 'Setup' });
-  if (sessions.length && sessions[0].confidence < 6) actions.push({ text: 'Foco: filler words na próxima sessão', sub: 'Confiança baixa na última sessão', badge: 'badge-red', bText: 'Urgente' });
-  if (!actions.length) actions.push({ text: 'Continue a sequência diária', sub: calcStreak() + ' dias de streak — não quebre', badge: 'badge-green', bText: 'Em dia' });
+  const g = getGateStatus();
 
-  actEl.innerHTML = actions.map(a => `
+  if (!sessions.length) actions.push({ text: 'Registrar primeira sessão de inglês', sub: 'Google Meet + Otter.ai → cole a transcrição', badge: 'badge-blue', bText: 'Hoje' });
+  else if (!g.isOpen) actions.push({ text: `Fechar o gate de "it was" (${g.consecutiveClean}/3)`, sub: 'Continue na mesma pergunta-base até 3 sessões consecutivas limpas', badge: 'badge-amber', bText: 'Prioridade' });
+  else actions.push({ text: 'Gate aberto — rotacionar para Fase 2', sub: 'Budget allocation, disagreement com founder/sales leader', badge: 'badge-green', bText: 'Pronto' });
+
+  if (!writingEntries.length) actions.push({ text: 'Registrar primeira entrada de journaling', sub: 'Escreva em inglês, peça feedback à IA', badge: 'badge-teal', bText: 'Setup' });
+  if (!mocks.length) actions.push({ text: 'Registrar mocks anteriores', sub: 'Suas simulações com IA (New North, etc) já têm transcrição pronta', badge: 'badge-purple', bText: 'Esta semana' });
+  if (!jobs.length) actions.push({ text: 'Adicionar vagas ativas no pipeline', sub: 'Brite + Remote Leverage + diretas, com versão de CV vinculada', badge: 'badge-gray', bText: 'Setup' });
+  if (!cvVersions.length) actions.push({ text: 'Cadastrar versões de CV', sub: 'Pelo menos a versão atual, para começar a medir conversão', badge: 'badge-gray', bText: 'Setup' });
+
+  if (!actions.length) actions.push({ text: 'Continue a sequência diária', sub: calcStreak(sessions.map(s=>s.date)) + ' dias de streak em inglês falado — não quebre', badge: 'badge-green', bText: 'Em dia' });
+
+  actEl.innerHTML = actions.slice(0,5).map(a => `
     <div class="list-item">
       <div class="list-item-body">
         <div class="list-item-title">${a.text}</div>
@@ -978,102 +1616,98 @@ function renderDashboard() {
     </div>`).join('');
 }
 
-async function callAI(prompt) {
-  const r = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1000, messages: [{ role: 'user', content: prompt }] })
-  });
-  const d = await r.json();
-  return d.content?.[0]?.text || 'Erro ao processar.';
+/* ============================================================
+   CUSTOM QUICK LINKS (Dashboard)
+   ============================================================ */
+async function addCustomLink() {
+  const name = document.getElementById('ql-name').value.trim();
+  let url = document.getElementById('ql-url').value.trim();
+  if (!name || !url) { alert('Preencha nome e URL.'); return; }
+  if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+  customLinks.unshift({ id: uid(), name, url });
+  await persist('customLinks');
+  clearFields(['ql-name','ql-url']);
+  renderCustomLinks();
 }
 
-async function analyzeSession() {
-  const box = document.getElementById('e-ai-box');
-  const body = document.getElementById('e-ai-body');
-  const spin = document.getElementById('e-spin');
-  box.style.display = 'block';
-  spin.innerHTML = '<span class="spinner"></span> ';
-  body.textContent = 'Analisando...';
-
-  const prompt = `Você é um coach de inglês para entrevistas B2B internacionais. Analise esta sessão de prática de um profissional de marketing brasileiro (B2, buscando vagas remotas nos EUA).
-
-Foco: ${document.getElementById('e-focus').value}
-Confiança: ${document.getElementById('e-conf').value}/10
-Filler words: ${document.getElementById('e-fill').value}
-O que funcionou: ${document.getElementById('e-win').value}
-Gap identificado: ${document.getElementById('e-gap').value}
-${document.getElementById('e-transcript').value ? 'Transcrição:\n' + document.getElementById('e-transcript').value.slice(0,1500) : ''}
-
-Responda em português, em 3 partes diretas:
-1. PADRÃO IDENTIFICADO (1 frase cirúrgica)
-2. EXERCÍCIO PARA AMANHÃ (ação concreta de 5–10 min)
-3. FRASE-ÂNCORA (uma frase em inglês para praticar hoje, relacionada ao gap)`;
-
-  try {
-    const result = await callAI(prompt);
-    spin.innerHTML = '';
-    body.textContent = result;
-  } catch(e) {
-    spin.innerHTML = '';
-    body.textContent = 'Erro na análise. Salve a sessão e traga a transcrição para o chat do Claude.';
-  }
+async function deleteCustomLink(id) {
+  customLinks = customLinks.filter(l => l.id !== id);
+  await persist('customLinks');
+  renderCustomLinks();
 }
 
-async function analyzeInterview() {
-  const box = document.getElementById('i-ai-box');
-  const body = document.getElementById('i-ai-body');
-  const spin = document.getElementById('i-spin');
-  box.style.display = 'block';
-  spin.innerHTML = '<span class="spinner"></span> ';
-  body.textContent = 'Diagnosticando...';
-
-  const prompt = `Você é um coach de carreira para profissionais de marketing LATAM buscando vagas remotas nos EUA. Seja direto e cirúrgico.
-
-Empresa: ${document.getElementById('i-co').value} | Vaga: ${document.getElementById('i-role').value}
-Resultado: ${document.getElementById('i-outcome').value}
-STAR: ${document.getElementById('i-star').value}/5 | Fluência: ${document.getElementById('i-flu').value}/5 | Presença: ${document.getElementById('i-pres').value}/5 | Técnico: ${document.getElementById('i-tech').value}/5 | Fit: ${document.getElementById('i-fit').value}/5
-Funcionou: ${document.getElementById('i-win').value}
-Gap: ${document.getElementById('i-gap').value}
-Feedback empresa: ${document.getElementById('i-fb').value}
-${document.getElementById('i-transcript').value ? 'Transcrição:\n' + document.getElementById('i-transcript').value.slice(0,1200) : ''}
-
-Responda em português em 3 partes:
-1. DIAGNÓSTICO REAL (por que não avançou — honesto, sem filtro)
-2. MUDANÇA PRIORITÁRIA (uma coisa concreta para a próxima entrevista)
-3. SCRIPT (reescreva em inglês a parte mais fraca, do jeito que deveria ser dita)`;
-
-  try {
-    const result = await callAI(prompt);
-    spin.innerHTML = '';
-    body.textContent = result;
-  } catch(e) {
-    spin.innerHTML = '';
-    body.textContent = 'Erro na análise. Salve a entrevista e traga os dados para o chat.';
-  }
+function renderCustomLinks() {
+  const el = document.getElementById('custom-links-list');
+  if (!el) return;
+  el.innerHTML = customLinks.map(l => `
+    <a class="qlink" href="${escapeHtml(l.url)}" target="_blank" rel="noopener" title="Remover: clique direito ou use o botão na lista">
+      <i class="ti ti-external-link"></i> ${escapeHtml(l.name)}
+      <span onclick="event.preventDefault(); event.stopPropagation(); deleteCustomLink(${l.id});" style="margin-left:4px; opacity:0.5;" title="Remover"><i class="ti ti-x"></i></span>
+    </a>`).join('');
 }
 
+/* ============================================================
+   EXPORT / IMPORT
+   ============================================================ */
 function exportData() {
-  const data = { sessions, interviews, jobs, exported: new Date().toISOString() };
+  const data = { sessions, writingEntries, mocks, realInterviews, jobs, cvVersions, shadowingEntries, customLinks, exported: new Date().toISOString() };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'growth-os-backup-' + today() + '.json';
+  a.download = 'growth-os-v2-backup-' + today() + '.json';
   a.click();
 }
 
-document.getElementById('e-date').value = today();
-document.getElementById('i-date').value = today();
-document.getElementById('p-date').value = today();
-renderSessionHistory();
-renderInterviewHistory();
-renderInterviewPatterns();
-renderJobList();
-updateEnglishMetrics();
-updateInterviewMetrics();
-updatePipelineMetrics();
-updateNavBadges();
-renderDashboard();
+async function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const text = await file.text();
+  try {
+    const data = JSON.parse(text);
+    if (data.sessions) sessions = data.sessions;
+    if (data.writingEntries) writingEntries = data.writingEntries;
+    if (data.mocks) mocks = data.mocks;
+    if (data.realInterviews) realInterviews = data.realInterviews;
+    if (data.jobs) jobs = data.jobs;
+    if (data.cvVersions) cvVersions = data.cvVersions;
+    if (data.shadowingEntries) shadowingEntries = data.shadowingEntries;
+    if (data.customLinks) customLinks = data.customLinks;
+    await Promise.all(['sessions','writing','mocks','real','jobs','cvs','shadowing','customLinks'].map(persist));
+    initRender();
+    alert('Dados importados com sucesso.');
+  } catch (e) {
+    alert('Erro ao importar arquivo: ' + e.message);
+  }
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+function initRender() {
+  renderSessionHistory(); updateEnglishMetrics();
+  renderShadowingHistory(); updateShadowingMetrics();
+  renderWritingHistory(); updateWritingMetrics();
+  renderMockHistory(); renderMockPatterns(); updateMockMetrics();
+  renderRealHistory(); renderRealPatterns(); updateRealMetrics();
+  renderCvList(); renderJobList(); updatePipelineMetrics(); renderCvConversion(); renderChannelConversion();
+  refreshPipelineSelects();
+  renderCustomLinks();
+  updateNavBadges();
+  renderGateBanner('gate-banner-eng','gate-banner-dots-eng','gate-banner-text-eng');
+  renderDashboard();
+}
+
+(async function main() {
+  document.getElementById('e-date').value = today();
+  document.getElementById('sh-date').value = today();
+  document.getElementById('w-date').value = today();
+  document.getElementById('wp-date').value = today();
+  document.getElementById('m-date').value = today();
+  document.getElementById('r-date').value = today();
+  document.getElementById('p-date').value = today();
+  await loadAll();
+  initRender();
+})();
 </script>
 </body>
 </html>
