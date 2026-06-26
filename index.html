@@ -262,6 +262,9 @@
         <div class="gate-dots" id="sidebar-gate-dots"></div>
         <span id="sidebar-gate-text" style="font-size:11px;">Gate: 0/3</span>
       </div>
+      <div id="storage-indicator" style="margin-top:8px; display:flex; align-items:center; gap:5px; font-size:10.5px;"></div>
+      <div id="storage-last-saved" style="font-size:9.5px; color:var(--text-3); margin-top:2px;"></div>
+      <button class="btn btn-ghost" onclick="exportData()" style="margin-top:6px; width:100%; justify-content:center; font-size:11px; padding:6px;"><i class="ti ti-download"></i> Backup (exportar)</button>
     </div>
   </nav>
 
@@ -785,11 +788,36 @@ const STORAGE_KEYS = {
 let sessions = [], writingEntries = [], mocks = [], realInterviews = [], jobs = [], cvVersions = [], shadowingEntries = [], customLinks = [];
 let settings = { floorMode: 'both' };
 
+/* Storage abstraction: tenta window.storage (artifact Claude), cai pra localStorage (arquivo/site).
+   Escreve nos dois quando possível (belt-and-suspenders). Lê preferindo window.storage. */
+const HAS_WINDOW_STORAGE = (typeof window !== 'undefined' && window.storage && typeof window.storage.get === 'function');
+let STORAGE_MODE = HAS_WINDOW_STORAGE ? 'claude' : 'local';
+
+async function rawGet(key) {
+  if (HAS_WINDOW_STORAGE) {
+    try { const r = await window.storage.get(key, false); if (r && r.value != null) return r.value; }
+    catch {}
+  }
+  try { const v = localStorage.getItem(key); if (v != null) { if (!HAS_WINDOW_STORAGE) STORAGE_MODE = 'local'; return v; } }
+  catch {}
+  return null;
+}
+
+async function rawSet(key, val) {
+  let saved = false;
+  if (HAS_WINDOW_STORAGE) {
+    try { await window.storage.set(key, val, false); saved = true; } catch {}
+  }
+  try { localStorage.setItem(key, val); saved = true; } catch {}
+  if (!saved) STORAGE_MODE = 'none';
+  return saved;
+}
+
 async function loadAll() {
   const results = await Promise.all(Object.entries(STORAGE_KEYS).map(async ([varName, key]) => {
     try {
-      const r = await window.storage.get(key, false);
-      return [varName, r && r.value ? JSON.parse(r.value) : (varName === 'settings' ? { floorMode: 'both' } : [])];
+      const v = await rawGet(key);
+      return [varName, v ? JSON.parse(v) : (varName === 'settings' ? { floorMode: 'both' } : [])];
     } catch { return [varName, varName === 'settings' ? { floorMode: 'both' } : []]; }
   }));
   const map = Object.fromEntries(results);
@@ -797,13 +825,31 @@ async function loadAll() {
   realInterviews = map.real; jobs = map.jobs; cvVersions = map.cvs;
   shadowingEntries = map.shadowing; customLinks = map.customLinks;
   settings = (map.settings && map.settings.floorMode) ? map.settings : { floorMode: 'both' };
+  updateStorageIndicator();
 }
 
 async function persist(varName) {
   const dataMap = { sessions, writing: writingEntries, mocks, real: realInterviews, jobs, cvs: cvVersions, shadowing: shadowingEntries, customLinks, settings };
   const key = STORAGE_KEYS[varName];
-  try { await window.storage.set(key, JSON.stringify(dataMap[varName]), false); }
-  catch (e) { console.error('Storage error', varName, e); }
+  await rawSet(key, JSON.stringify(dataMap[varName]));
+  await rawSet('_last_saved_at', new Date().toISOString());
+  updateStorageIndicator();
+}
+
+function updateStorageIndicator() {
+  const el = document.getElementById('storage-indicator');
+  if (!el) return;
+  const label = { claude: 'Salvo no Claude', local: 'Salvo no navegador', none: '⚠ Não está salvando' };
+  const icon = { claude: 'ti-cloud-check', local: 'ti-device-desktop', none: 'ti-cloud-x' };
+  el.innerHTML = `<i class="ti ${icon[STORAGE_MODE]}"></i> ${label[STORAGE_MODE]}`;
+  el.style.color = STORAGE_MODE === 'none' ? 'var(--red)' : 'var(--text-3)';
+  rawGet('_last_saved_at').then(ts => {
+    const sub = document.getElementById('storage-last-saved');
+    if (!sub) return;
+    if (!ts) { sub.textContent = ''; return; }
+    const d = new Date(ts);
+    sub.textContent = 'Último salvamento: ' + d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+  });
 }
 
 /* ============================================================
